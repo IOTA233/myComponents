@@ -1,0 +1,15 @@
+{
+  "name": "@zhdgps/docs",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev ."
+  },
+  "dependencies": {
+    "vitepress": "1.0.0-rc.25"
+  }
+}

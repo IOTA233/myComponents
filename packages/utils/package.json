@@ -1,0 +1,9 @@
+{
+  "name": "@zhdgps/utils",
+  "version": "1.0.0",
+  "private": true,
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+  }
+}

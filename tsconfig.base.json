@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@zhdgps/*": ["packages/*"]
+    },
+    "resolveJsonModule": true,
+    "types": ["element-plus/global"],
+    "allowJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "outDir": "dist",
+    "removeComments": false,
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "include": [
+      "node_modules/element-plus/global.d.ts"
+    ]
+  }
+}
