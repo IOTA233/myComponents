@@ -9,16 +9,13 @@ hero:
   name: T-ui-plus
   text: vue3基础组件
   tagline: Vue3 中基于Element-plus二次封装基础组件文档
-  image:
-    src: /img/hero.jpg
-    alt: t-ui-plus
   actions:
     - theme: brand
       text: 安装指南
-      link: /components/
+      link: /examples/
     - theme: brand
       text: 组件预览
-      link: /components/Locate/base.md
+      link: /examples/Locate/base.md
 features:
   # - icon: 🔨
   #   title: 实际项目

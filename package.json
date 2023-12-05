@@ -16,7 +16,7 @@
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "dev:docs": "pnpm run -C docs dev",
+    "docs:dev": "pnpm run -C docs dev",
     "dev:components": "vite packages/components"
   },
   "dependencies": {

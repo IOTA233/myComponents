@@ -1,5 +1,6 @@
 {
   "name": "@zhdgps/docs",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "author": "",
@@ -9,6 +10,8 @@
     "dev": "vitepress dev ."
   },
   "devDependencies": {
-    "vitepress": "1.0.0-rc.31"
+    "markdown-it-container": "^4.0.0",
+    "vitepress": "1.0.0-rc.31",
+    "vitepress-plugin-sandpack": "^1.1.4"
   }
 }
