@@ -1,8 +1,8 @@
-import { warn } from 'vue'
 import { fromPairs } from 'lodash-unified'
 import type { PropType } from 'vue'
-import { isObject } from '../../types'
+import { warn } from 'vue'
 import { hasOwn } from '../../objects'
+import { isObject } from '../../types'
 
 import type {
   EpProp,

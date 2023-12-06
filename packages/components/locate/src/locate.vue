@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 // import { ElButton } from 'element-plus';
 import { onMounted } from 'vue';
-import { locateProps } from './location';
+import { locateProps } from './locate';
 
 defineOptions({
   name: 'Locate',
@@ -15,6 +15,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <ElButton>test</ElButton>
+    <ElButton>test1</ElButton>
   </div>
 </template>

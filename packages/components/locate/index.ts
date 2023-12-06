@@ -1,8 +1,9 @@
 import { withInstall } from '@zhdgps/utils'
 
-import Loaction from './src/loation.vue'
+import Locate from './src/locate.vue'
 
-export const ZHDLocation = withInstall(Loaction)
-export default ZHDLocation
+export const ZHDLocate = withInstall(Locate)
+export default ZHDLocate
 
-export * from './src/location'
+export * from './src/locate'
+
