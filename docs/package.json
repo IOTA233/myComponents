@@ -14,9 +14,10 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@vitepress-demo-preview/component": "^2.3.2",
+    "@vitepress-demo-preview/plugin": "^1.2.2",
     "markdown-it": "^13.0.2",
     "markdown-it-container": "^4.0.0",
-    "vitepress": "1.0.0-rc.31",
-    "vitepress-plugin-sandpack": "^1.1.4"
+    "vitepress": "1.0.0-rc.31"
   }
 }

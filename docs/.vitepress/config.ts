@@ -1,6 +1,6 @@
-import container from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
-import { renderSandbox } from 'vitepress-plugin-sandpack'
+import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -29,18 +29,8 @@ export default defineConfig({
   },
   markdown: {
     config(md) {
-      md
-        // the second parameter is html tag name
-        .use(container, 'sandbox', {
-          render(tokens, idx) {
-            return renderSandbox(tokens, idx, 'sandbox')
-          },
-        })
-        .use(container, 'my-sandbox', {
-          render(tokens, idx) {
-            return renderSandbox(tokens, idx, 'my-sandbox')
-          },
-        })
-    },
-  },
+      md.use(containerPreview)
+      md.use(componentPreview)
+    }
+  }
 })

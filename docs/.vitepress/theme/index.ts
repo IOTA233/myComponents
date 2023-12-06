@@ -5,16 +5,14 @@ import 'element-plus/dist/index.css'
 import locale from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
-import { Sandbox } from 'vitepress-plugin-sandpack'
-import 'vitepress-plugin-sandpack/dist/style.css'
 
 // 图标并进行全局注册
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 基于element-plus二次封装基础组件
 import zhdComponents from '@zhdgps/components'
-
-import MySandbox from './MySandbox.vue'
+import { AntDesignContainer, ElementPlusContainer, NaiveUIContainer } from '@vitepress-demo-preview/component'
+import '@vitepress-demo-preview/component/dist/style.css'
 
 export default {
   ...DefaultTheme,
@@ -30,7 +28,7 @@ export default {
     }
     // 全局注册基础组件
     ctx.app.use(zhdComponents)
-    ctx.app.component('Sandbox', Sandbox)
-    ctx.app.component('MySandbox', MySandbox)
+
+    ctx.app.component('demo-preview', AntDesignContainer)
   },
 }
