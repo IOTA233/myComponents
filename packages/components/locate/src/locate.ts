@@ -4,7 +4,7 @@ import {
 import type { ExtractPropTypes } from 'vue'
 import type Locate from './locate.vue'
 
-export const locateType = ['selsctor', 'picker', 'all']
+export const locateType = ['selsctor', 'picker', 'all'] as const
 
 export const locateProps = buildProps({
   type: {
