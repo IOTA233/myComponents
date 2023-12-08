@@ -21,7 +21,8 @@
     "skipLibCheck": true,
 
     "include": [
-      "node_modules/element-plus/global.d.ts"
+      "node_modules/element-plus/global.d.ts",
+      "packages/assets/img/image.d.ts"
     ]
   }
 }

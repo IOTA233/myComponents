@@ -6,6 +6,6 @@
     "types": [],
     "skipLibCheck": true
   },
-  "include": ["packages", "vitest.setup.ts", "typings/env.d.ts", "packages/utils/assets/json/province-city-area.json"],
+  "include": ["packages", "vitest.setup.ts", "typings/env.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.md"]
 }
