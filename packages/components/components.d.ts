@@ -104,6 +104,16 @@ declare module '@vue/runtime-core' {
     ElSelectV2: typeof import('element-plus/es')['ElSelectV2']
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
   }
+  interface ComponentCustomProperties {
+    $message: typeof import('element-plus/es')['ElMessage']
+    $notify: typeof import('element-plus/es')['ElNotification']
+    $msgbox: typeof import('element-plus/es')['ElMessageBox']
+    $messageBox: typeof import('element-plus/es')['ElMessageBox']
+    $alert: typeof import('element-plus/es')['ElMessageBox']['alert']
+    $confirm: typeof import('element-plus/es')['ElMessageBox']['confirm']
+    $prompt: typeof import('element-plus/es')['ElMessageBox']['prompt']
+    $loading: typeof import('element-plus/es')['ElLoadingService']
+  }
 }
 
 export { }

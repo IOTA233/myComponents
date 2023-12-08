@@ -12,6 +12,9 @@
     "ol": "^8.2.0"
   },
   "devDependencies": {
+    "unplugin-auto-import": "^0.17.2",
+    "unplugin-icons": "^0.18.1",
+    "unplugin-vue-components": "^0.26.0",
     "vite-plugin-inspect": "^0.8.1"
   }
 }

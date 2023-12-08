@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import { computed, onBeforeMount, onMounted, ref } from 'vue'
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue'
 import { Feature, Map, View } from 'ol'
 import MousePosition from 'ol/control/MousePosition'
 import { createStringXY } from 'ol/coordinate'
@@ -14,7 +14,8 @@ import { tiandituKey } from '@zhdgps/constants'
 import { GetGeocode, GetReGeocode, gcj02towgs84, wgs84togcj02 } from '@zhdgps/utils'
 
 import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
-import markerIcon from '@zhdgps/assets/img/marker.png'
+import markerIcon from '@zhdgps/assets/img/inspect/marker.png'
+import { ElMessage } from 'element-plus'
 
 defineOptions({
   name: 'PickCoordinate',
@@ -27,7 +28,7 @@ const props = defineProps({
   // 是否根据坐标查询地理信息
   useGeoCode: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
 const emits = defineEmits(['pickChange'])
@@ -37,8 +38,7 @@ const ZOOM = 5
 
 const keyword = ref('')
 const map = ref()
-let pickCoordinate: number[] = []
-const confirmLoading = ref(false)
+const pickCoordinate = ref<number[]>([])
 let geoCode: GeoCode = {}
 let markerFeature: Feature<Geometry>
 let markerLayer: VectorLayer<VectorSource<Feature<Geometry>>>
@@ -46,45 +46,20 @@ let mapInstance: Map
 const coordinateFormat = createStringXY(6)
 
 const showCoordinate = computed(() =>
-  pickCoordinate.length > 0 ? coordinateFormat(pickCoordinate).toString() : '',
+  pickCoordinate.value.length > 0 ? coordinateFormat(pickCoordinate.value).toString() : '',
 )
-// watch(
-//   visible,
-//   (isShow) => {
-//     if (isShow) {
-//       keyword.value = ''
-//       geoCode = {}
-//       if (!mapInstance) {
-//         // 首次打开坐标拾取
-//         setTimeout(() => {
-//           setupMap()
-//         }, 300)
-//       } else {
-//         const hasCoordinates = props.coordinates.length > 0
-//         if (hasCoordinates) {
-//           // 有坐标传入，定位更新到该坐标
-//           updateMarker(props.coordinates, true)
-//         } else {
-//           // 无坐标，定位到中国视图
-//           const viewer = mapInstance.getView()
-//           viewer.setCenter(CENTER)
-//           viewer.setZoom(ZOOM)
-//           updateMarker([])
-//         }
-//       }
-//     }
-//   },
-//   { immediate: true },
-// )
+
+watch(showCoordinate, () => {
+  console.log('pickCoordinate :>> ', pickCoordinate.value)
+  handleChange()
+})
 onMounted(() => {
   keyword.value = ''
   geoCode = {}
-  if (!mapInstance) {
-    // 首次打开坐标拾取
-    setTimeout(() => {
-      setupMap()
-    }, 300)
-  }
+  // 首次打开坐标拾取
+  setTimeout(() => {
+    setupMap()
+  }, 300)
 })
 onBeforeMount(() => destroyMap())
 
@@ -169,7 +144,7 @@ function addMarkerLayer(hasCoordinates: boolean) {
  * @param {boolean} isFit 是否缩放到坐标点
  */
 function updateMarker(coordinate: Array<number>, isFit: boolean = false) {
-  pickCoordinate = coordinate
+  pickCoordinate.value = coordinate
   markerFeature.set('geometry', new Point(coordinate))
 
   if (isFit && markerLayer) {
@@ -188,10 +163,11 @@ function updateMarker(coordinate: Array<number>, isFit: boolean = false) {
  */
 function handleSearch() {
   if (!keyword.value) {
-    // return $message.warn({
-    //   key: 'none-keyword',
-    //   content: '请输入关键词'
-    // })
+    ElMessage({
+      message: '请输入关键词',
+      type: 'warning',
+    })
+    return
   }
   GetGeocode(keyword.value).then((res) => {
     const { status, geocodes } = res
@@ -201,43 +177,44 @@ function handleSearch() {
         const gcj02Coordinate = geoCode.location.split(',').map(Number)
         // 需要把gcj02转成wgs84
         const [lat, long] = gcj02Coordinate
-        pickCoordinate = gcj02towgs84(lat, long)
-        updateMarker(pickCoordinate, true)
+        pickCoordinate.value = gcj02towgs84(lat, long)
+        updateMarker(pickCoordinate.value, true)
       }
     } else {
-      // $message.info({
-      //   key: 'no-data',
-      //   content: '未找到相关地址'
-      // })
+      ElMessage({
+        message: '未找到相关地址',
+        type: 'warning',
+      })
     }
   })
 }
-// async function handleConfirm() {
-//   if (showCoordinate.value === props.coordinates.join(', ')) {
-//     return handleCancel()
-//   }
+async function handleChange() {
+  if (showCoordinate.value === props.coordinates.join(', ')) {
+    return
+  }
+  const wgs84Coordinate = showCoordinate.value.split(',').map(Number)
 
-//   const wgs84Coordinate = showCoordinate.value.split(',').map(Number)
-
-//   let geo = { } as any
-//   if (props.useGeoCode && showCoordinate.value && !geoCode.adcode) {
-//     confirmLoading.value = true
-//     geo = await fetchReGeoCode(wgs84Coordinate).catch(() => {})
-//     confirmLoading.value = false
-//   } else if (geoCode.adcode) {
-//     const { adcode, formatted_address: formattedAddress } = geoCode
-//     const adcodeTree = deal(pcaOptions, (node: any) => node.value === adcode)
-//     geo = { address: formattedAddress, ...flatMap(adcodeTree) }
-//   }
-//   emits('pickChange', {
-//     address: geo.address || '',
-//     district: geo.district || [],
-//     districtCode: geo.districtCode || [],
-//     coordinate: wgs84Coordinate,
-//   })
-
-//   handleCancel()
-// }
+  let geo = { } as any
+  if (props.useGeoCode && showCoordinate.value && !geoCode.adcode) {
+    geo = await fetchReGeoCode(wgs84Coordinate).catch(() => {})
+  } else if (geoCode.adcode) {
+    const { adcode, formatted_address: formattedAddress } = geoCode
+    const adcodeTree = deal(pcaOptions, (node: any) => node.value === adcode)
+    geo = { address: formattedAddress, ...flatMap(adcodeTree) }
+  }
+  emits('pickChange', {
+    address: geo.address || '',
+    district: geo.district || [],
+    districtCode: geo.districtCode || [],
+    coordinate: wgs84Coordinate,
+  })
+  console.log({
+    address: geo.address || '',
+    district: geo.district || [],
+    districtCode: geo.districtCode || [],
+    coordinate: wgs84Coordinate,
+  })
+}
 /**
  * 逆地理编码
  * @summary 查询坐标点的地理信息
@@ -332,8 +309,8 @@ function destroyMap() {
 
 <template>
   <div class="picker">
-    <div class="container-header clearfix">
-      <el-space class="container-header-left">
+    <div class="picker-header">
+      <el-space class="picker-header-left">
         <el-input
           v-model="keyword"
           class="picker-header-search"
@@ -344,7 +321,7 @@ function destroyMap() {
           搜索
         </el-button>
       </el-space>
-      <div class="container-header-right picker-header__result">
+      <div class="picker-header-right picker-header__result">
         坐标获取结果：{{ showCoordinate }}
       </div>
     </div>
@@ -354,7 +331,7 @@ function destroyMap() {
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .picker {
   &__icon {
     cursor: pointer;

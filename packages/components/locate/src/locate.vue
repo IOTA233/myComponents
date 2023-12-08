@@ -45,7 +45,7 @@ const emits = defineEmits(['update:cityCode', 'update:cityName', 'change'])
 const country = ref('china')
 const code = ref<string[] | undefined>([])
 const areaName = ref('')
-const visible = ref(false)
+const visible = ref(true)
 const cascader = ref()
 
 const countries = [
@@ -122,7 +122,7 @@ function onInputChange() {
       />
 
       <el-tooltip
-        v-if="type === 'All'"
+        v-if="type === 'all'"
         class="box-item"
         effect="dark"
         content="定位"
@@ -131,6 +131,6 @@ function onInputChange() {
         <el-button type="default" :icon="AddLocation" @click="visible = !visible" />
       </el-tooltip>
     </el-space>
-    <pickCoordinate />
+    <pickCoordinate v-if="type !== 'selector'" v-show="visible" />
   </div>
 </template>
