@@ -30,7 +30,7 @@ export default defineConfig({
         }),
       ],
 
-      dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
+      dts: path.resolve(pathSrc, 'typings', 'auto-imports.d.ts'),
     }),
 
     Components({
@@ -45,7 +45,7 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
 
-      dts: path.resolve(pathSrc, 'components.d.ts'),
+      dts: path.resolve(pathSrc, 'typings', 'components.d.ts'),
     }),
 
     Icons({

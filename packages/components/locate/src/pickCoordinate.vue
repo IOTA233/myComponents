@@ -50,7 +50,6 @@ const showCoordinate = computed(() =>
 )
 
 watch(showCoordinate, () => {
-  console.log('pickCoordinate :>> ', pickCoordinate.value)
   handleChange()
 })
 onMounted(() => {
@@ -95,7 +94,7 @@ function setupMap() {
   })
   addMarkerLayer(hasCoordinates)
 
-  mapInstance.on('singleclick', (e) => {
+  mapInstance.on('singleclick', (e: { coordinate: number[] }) => {
     geoCode = {}
     updateMarker(e.coordinate)
   })
@@ -321,8 +320,8 @@ function destroyMap() {
           搜索
         </el-button>
       </el-space>
-      <div class="picker-header-right picker-header__result">
-        坐标获取结果：{{ showCoordinate }}
+      <div class="picker-header-right picker-header__result" v-show="showCoordinate">
+        坐标：{{ showCoordinate }}
       </div>
     </div>
     <div id="map" ref="map" class="map">
@@ -338,11 +337,13 @@ function destroyMap() {
   }
 
   &-header {
+    margin-bottom: 8px;
     &-search {
-      width: 300px;
+      width: 220px;
     }
 
     &__result {
+      float: right;
       font-size: 16px;
     }
   }

@@ -32,8 +32,9 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.1.1",
     "@element-plus/icons-vue": "^2.3.1",
+    "@iconify-json/carbon": "^1.1.24",
     "@iconify-json/ep": "^1.1.13",
-    "@types/node": "*",
+    "@types/node": "^20.9.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "@zhdgps/utils": "workspace:^",
     "axios": "^1.6.2",

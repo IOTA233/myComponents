@@ -39,11 +39,14 @@ importers:
       '@element-plus/icons-vue':
         specifier: ^2.3.1
         version: 2.3.1(vue@3.3.8)
+      '@iconify-json/carbon':
+        specifier: ^1.1.24
+        version: 1.1.24
       '@iconify-json/ep':
         specifier: ^1.1.13
         version: 1.1.13
       '@types/node':
-        specifier: '*'
+        specifier: ^20.9.0
         version: 20.9.0
       '@vitejs/plugin-vue':
         specifier: ^4.2.3
@@ -947,6 +950,12 @@ packages:
 
   /@humanwhocodes/object-schema@2.0.1:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
+    dev: true
+
+  /@iconify-json/carbon@1.1.24:
+    resolution: {integrity: sha512-Sx4vj3HfQj3yP6a4QzWc1BymDO5uTOGTHeb5it/xaMa196C6+RegNUv1F+Y1h8AJ2Sv93GMI+PyMH0HyqTHEmg==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify-json/ep@1.1.13:
