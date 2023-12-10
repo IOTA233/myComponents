@@ -1,128 +1,140 @@
-<script>
-import { GetIPLocation, GetWeather } from '@/api/amap'
-import { weatherImages } from '@/vendor/weather/icons'
+<script lang="ts" setup>
+import { onMounted, ref, watch } from 'vue'
+import { weatherImages } from '@zhdgps/constants'
+import { GetIPLocation, GetWeather } from '@zhdgps/utils'
+import { ElMessage } from 'element-plus'
 
-export default {
-  data() {
-    return {
-      locationCity: {},
-      forecasts: [],
-      weatherData: {},
-      date: 0,
-      fetchLoading: false,
+const locationCity = ref<any>({})
+const forecasts = ref<any[]>([])
+const weatherData = ref<any>({})
+const date = ref(0)
+const fetchLoading = ref(false)
+const dayIcon = ref('')
+const nightIcon = ref('')
+
+onMounted(async () => {
+  fetchLoading.value = true
+  await fetchIPLocation().catch(() => {})
+  await fetchWeather().catch(() => {})
+  fetchLoading.value = false
+})
+watch(weatherData, async () => {
+  const nightCode = weatherImages.get(weatherData.value.nightweather) || '999'
+  const dayCode = weatherImages.get(weatherData.value.nightweather) || '999'
+  const nightModule = await import(`../../../assets/img/weather/${nightCode}.png`)
+  const dayModule = await import(`../../../assets/img/weather/${dayCode}.png`)
+  dayIcon.value = dayModule.default
+  nightIcon.value = nightModule.default
+})
+// 根据IP获取定位信息
+function fetchIPLocation() {
+  return GetIPLocation().then((data) => {
+    const { status, city, adcode } = data
+    if (status === '1') {
+      locationCity.value = {
+        city,
+        adcode,
+      }
     }
-  },
-  async created() {
-    this.fetchLoading = true
-    await this.fetchIPLocation().catch(() => {})
-    await this.fetchWeather().catch(() => {})
-    this.fetchLoading = false
-  },
-  methods: {
-    // 根据IP获取定位信息
-    fetchIPLocation() {
-      return GetIPLocation().then((data) => {
-        const { status, city, adcode } = data
-        if (status === '1') {
-          this.locationCity = {
-            city,
-            adcode,
-          }
-        }
-      })
-    },
-    // 根据城市编码获取实况天气
-    fetchWeather() {
-      this.forecasts = []
-      const adcode = this.locationCity.adcode
-      if (!adcode || typeof adcode !== 'string') {
-        this.$message.error({
-          type: 'fail',
-          content: this.$t('home.获取天气失败'),
-        })
-        return Promise.resolve()
-      }
-      return GetWeather(adcode, 'all').then((data) => {
-        const { status, forecasts = [] } = data || {}
-        if (status === '1') {
-          this.forecasts = forecasts[0].casts.slice(0, 3) || []
-          this.weatherData = this.forecasts[0]
-          this.reporttime = forecasts[0].reporttime
-        }
-      })
-    },
-    getWeatherIcon(weather) {
-      const code = weatherImages.get(weather) || '999'
-      return `/assets/img/weather/${code}.png`
-    },
-    handleDateChange() {
-      if (this.forecasts.length > this.date) {
-        this.weatherData = this.forecasts[this.date]
-      }
-    },
-  },
+  })
+}
+// 根据城市编码获取实况天气
+function fetchWeather() {
+  forecasts.value = []
+  const adcode = locationCity.value.adcode
+  if (!adcode || typeof adcode !== 'string') {
+    ElMessage({
+      message: '获取天气失败',
+      type: 'error',
+    })
+    return Promise.resolve()
+  }
+  return GetWeather(adcode, 'all').then((data) => {
+    const { status, forecasts: forecastList = [] } = data || {}
+    if (status === '1') {
+      forecasts.value = forecastList[0].casts.slice(0, 3) || []
+      weatherData.value = forecasts.value[0]
+      console.log(weatherData.value)
+    }
+  })
+}
+
+function handleDateChange() {
+  if (forecasts.value.length > date.value) {
+    weatherData.value = forecasts.value[date.value]
+  }
+}
+function appendSuffix(value: string, suffix: string) {
+  return value == null || value === '' ? '' : value + (suffix || '')
 }
 </script>
 
 <template>
   <div class="weather home-card">
     <div class="home-card-header">
-      <span class="home-card-header__name">{{ $t('home.天气情况') }}</span>
+      <span class="home-card-header__name">天气情况</span>
       <span class="weather-updatetime">
         <template v-if="forecasts.length > 0">
-          <a-radio-group v-model="date" size="small" button-style="solid" @change="handleDateChange">
-            <a-radio-button :value="0"> {{ $t('公共.今天') }} </a-radio-button>
-            <a-radio-button :value="1"> {{ $t('公共.明天') }} </a-radio-button>
-            <a-radio-button :value="2"> {{ $t('公共.后天') }} </a-radio-button>
-          </a-radio-group>
+          <el-radio-group v-model="date" size="small" @change="handleDateChange">
+            <el-radio-button :label="0"> 今天 </el-radio-button>
+            <el-radio-button :label="1"> 明天 </el-radio-button>
+            <el-radio-button :label="2"> 后天 </el-radio-button>
+          </el-radio-group>
         </template>
-        <template v-else>{{ $t('公共.暂无数据') }}</template>
+        <template v-else>暂无数据</template>
       </span>
     </div>
     <div class="home-card-body">
-      <a-spin :spinning="fetchLoading">
-        <div class="weather-body">
-          <div class="weather-content">
-            <img class="weather-day__icon" :src="getWeatherIcon(weatherData.dayweather)" alt="">
-            <div class="weather-content-feature">
-              <p>{{ $t('公共.白天') }}</p>
-              <p>{{ weatherData.dayweather }}</p>
-              <p>{{ weatherData.daytemp | appendSuffix('℃') }}</p>
-            </div>
-            <p class="weather-content-wind">
-              <span>{{ $t('home.风力') }}{{ weatherData.daypower || 0 }}{{ $t('公共.级') }}</span>
-              <span class="weather-content-wind__direction">
-                {{ $t('home.风向') }}:{{ weatherData.daywind || $t('公共.无') }}{{ $t('home.风') }}
-              </span>
-            </p>
+      <div class="weather-body" v-loading="fetchLoading">
+        <div class="weather-content">
+          <img class="weather-day__icon" :src="dayIcon" alt="">
+          <div class="weather-content-feature">
+            <p>白天</p>
+            <p>{{ weatherData.dayweather }}</p>
+            <p>{{ appendSuffix(weatherData.daytemp, '℃') }}</p>
           </div>
-          <div class="weather-content">
-            <img class="weather-day__icon" :src="getWeatherIcon(weatherData.nightweather)" alt="">
-            <div class="weather-content-feature">
-              <p>{{ $t('公共.夜晚') }}</p>
-              <p>{{ weatherData.nightweather }}</p>
-              <p>{{ weatherData.nighttemp | appendSuffix('℃') }}</p>
-            </div>
-            <p class="weather-content-wind">
-              <span>{{ $t('home.风力') }}{{ weatherData.nightpower || 0 }}{{ $t('公共.级') }}</span>
-              <span class="weather-content-wind__direction">
-                {{ $t('home.风向') }}:{{ weatherData.nightwind || $t('公共.无') }}{{ $t('home.风') }}
-              </span>
-            </p>
-          </div>
+          <p class="weather-content-wind">
+            <span>风力{{ weatherData.daypower || 0 }}级</span>
+            <span class="weather-content-wind__direction">
+              风向:{{ weatherData.daywind || '无' }}风
+            </span>
+          </p>
         </div>
-      </a-spin>
+        <div class="weather-content">
+          <img class="weather-day__icon" :src="nightIcon" alt="">
+          <div class="weather-content-feature">
+            <p>夜晚</p>
+            <p>{{ weatherData.nightweather }}</p>
+            <p>{{ appendSuffix(weatherData.nighttemp, '℃') }}</p>
+          </div>
+          <p class="weather-content-wind">
+            <span>风力{{ weatherData.nightpower || 0 }}级</span>
+            <span class="weather-content-wind__direction">
+              风向:{{ weatherData.nightwind || '无' }}风
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .weather {
   height: 166px;
 
-  @media (max-width: 1600px) {
-    height: 348px;
+  img {
+    vertical-align: middle;
+    display: inline-block !important;
   }
+  p {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  // @media (max-width: 1600px) {
+  //   height: 348px;
+  // }
 
   &-updatetime {
     float: right;
@@ -147,28 +159,28 @@ export default {
       content: '';
     }
 
-    @media (max-width: 1600px) {
-      flex-direction: column;
+    // @media (max-width: 1600px) {
+    //   flex-direction: column;
 
-      &::after {
-        top: 50%;
-        right: 32px;
-        bottom: auto;
-        left: 32px;
-        width: auto;
-        height: 1px;
-      }
-    }
+    //   &::after {
+    //     top: 50%;
+    //     right: 32px;
+    //     bottom: auto;
+    //     left: 32px;
+    //     width: auto;
+    //     height: 1px;
+    //   }
+    // }
   }
 
   &-content {
     width: 50%;
     text-align: center;
 
-    @media (max-width: 1600px) {
-      padding-top: 40px;
-      width: 100%;
-    }
+    // @media (max-width: 1600px) {
+    //   padding-top: 40px;
+    //   width: 100%;
+    // }
 
     &__icon,
     &-feature {
@@ -206,10 +218,10 @@ export default {
     width: 50%;
     text-align: center;
 
-    @media (max-width: 1600px) {
-      padding-top: 60px;
-      width: 100%;
-    }
+    // @media (max-width: 1600px) {
+    //   padding-top: 60px;
+    //   width: 100%;
+    // }
 
     &__name {
       margin-left: 3px;
@@ -222,4 +234,30 @@ export default {
     }
   }
 }
+
+.home-card {
+      overflow: hidden;
+      border-radius: 8px;
+      background: #ffffff;
+
+      $header-height: 40px;
+
+      &-header {
+        padding: 0 16px;
+        height: $header-height;
+        background: #f7faff;
+        line-height: $header-height;
+
+        &__name {
+          font-size: 18px;
+          font-family: 'PingFang SC-Medium', 'PingFang SC', sans-serif;
+          font-weight: 500;
+          color: #7485a3;
+        }
+      }
+
+      &-body {
+        height: calc(100% - $header-height);
+      }
+    }
 </style>

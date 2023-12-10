@@ -1,4 +1,5 @@
 import { saveAs } from 'file-saver'
+
 // @see https://github.com/evidenceprime/html-docx-js
 import htmlDocx from 'html-docx-js/dist/html-docx'
 
@@ -11,11 +12,11 @@ const IMAGE_QUALITY = 0.8
 
 /**
  * HTML导出Docx
- * @param {String} params.element 要导出的元素选择器
- * @param {String} params.styleString 样式字符串
- * @param {Object} params.margins 页边距 {top: 1440}，1440 i.e. 2.54 cm
- * @param {String} params.orientation 页面方向 portrait：竖向、landscape：横向
- * @param {String} params.filename 导出文件名称
+ * @param {string} params.element 要导出的元素选择器
+ * @param {string} params.styleString 样式字符串
+ * @param {object} params.margins 页边距 {top: 1440}，1440 i.e. 2.54 cm
+ * @param {string} params.orientation 页面方向 portrait：竖向、landscape：横向
+ * @param {string} params.filename 导出文件名称
  */
 async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }) {
   const html = generateContent(element)
@@ -42,8 +43,8 @@ async function exportHtmlToDocx({ element, styleString, margins, orientation = '
 
 /**
  * 生成导出的html字符串
- * @param {String} element 要导出的元素选择器
- * @returns {String}
+ * @param {string} element 要导出的元素选择器
+ * @returns {string}
  */
 function generateContent(element) {
   const sourceElement = document.querySelector(element)

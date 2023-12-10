@@ -17,7 +17,12 @@ export default defineConfig({
         text: '目录',
         items: [
           { text: '安装指南', link: '/examples/安装指南' },
-          { text: 'Locate', link: '/examples/Locate' },
+          { text: 'Locate 定位', link: '/examples/Locate' },
+          { text: 'Weather 天气', link: '/examples/Weather' },
+          { text: 'HTML2Word 转换html', link: '/examples/Weather' },
+          { text: 'OutputExcel 导出excel', link: '/examples/Weather' },
+          { text: 'DigtalAnimate 数字动画', link: '/examples/Weather' },
+          { text: 'DigtalAnimate 卫星数据', link: '/examples/Weather' },
         ],
       },
     ],

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const cityCode = ref([])
 const address = ref('')
@@ -7,10 +7,10 @@ const address = ref('')
 
 <template>
   <div>
-    <Locate v-model:city-code="cityCode" v-model:address="address" type="all" >
+    <Locate v-model:city-code="cityCode" v-model:address="address" type="all">
       <template #address>
-        <div  v-show="address" style="padding-top: 6px">
-          <span >详细地址：{{ address }}</span>
+        <div v-show="address" style="padding-top: 6px">
+          <span>详细地址：{{ address }}</span>
         </div>
       </template>
     </Locate>

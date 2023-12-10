@@ -16,6 +16,7 @@ import { GetGeocode, GetReGeocode, gcj02towgs84, wgs84togcj02 } from '@zhdgps/ut
 import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
 import markerIcon from '@zhdgps/assets/img/inspect/marker.png'
 import { ElMessage } from 'element-plus'
+import { random } from 'lodash-unified'
 
 defineOptions({
   name: 'PickCoordinate',
@@ -43,6 +44,7 @@ let geoCode: GeoCode = {}
 let markerFeature: Feature<Geometry>
 let markerLayer: VectorLayer<VectorSource<Feature<Geometry>>>
 let mapInstance: Map
+const mapId = random(8).toString()
 const coordinateFormat = createStringXY(6)
 
 const showCoordinate = computed(() =>
@@ -82,7 +84,7 @@ function setupMap() {
   const hasCoordinates = props.coordinates.length > 0
   const center = hasCoordinates ? props.coordinates : CENTER
   mapInstance = new Map({
-    target: 'map', // 绑定的dom元素
+    target: mapId, // 绑定的dom元素
     layers: [baseLayer, labelLayer],
     controls: [mousePosition],
     view: new View({
@@ -320,11 +322,11 @@ function destroyMap() {
           搜索
         </el-button>
       </el-space>
-      <div class="picker-header-right picker-header__result" v-show="showCoordinate">
+      <div v-show="showCoordinate" class="picker-header-right picker-header__result">
         坐标：{{ showCoordinate }}
       </div>
     </div>
-    <div id="map" ref="map" class="map">
+    <div :id="mapId" ref="map" class="map">
       <div id="location" class="map-location" />
     </div>
   </div>

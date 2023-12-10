@@ -1,13 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const cityCode = ref([])
-const cityName = ref('test')
+const address = ref('')
 </script>
 
 <template>
   <div>
-    <Locate v-model:city-code="cityCode" v-model:city-name="cityName" />
-    {{ cityName }}
+    <Locate v-model:city-code="cityCode" v-model:address="address" type="selector" />
   </div>
 </template>

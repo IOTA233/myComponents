@@ -1,12 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const cityCode = ref([])
-const cityName = ref('')
+const address = ref('')
 </script>
 
 <template>
   <div>
-    <Locate v-model:city-code="cityCode" v-model:city-name="cityName" type="picker" />
+    <Locate v-model:city-code="cityCode" v-model:address="address" type="picker">
+      <template #address>
+        <div v-show="address" style="padding-top: 6px">
+          <span>详细地址：{{ address }}</span>
+        </div>
+      </template>
+    </Locate>
   </div>
 </template>

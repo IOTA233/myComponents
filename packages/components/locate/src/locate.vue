@@ -112,7 +112,7 @@ function handlePick(cords: any) {
 
 <template>
   <div>
-    <el-space>
+    <el-space v-if="type === 'all' || type === 'selector'">
       <template v-if="abroad">
         <el-select v-model="country" style="min-width: 60px" :filterable="true" @change="handleChangeCountry">
           <el-option v-for="({ key, name }) in countries" :key="key" :value="key" :label="name">
@@ -150,8 +150,8 @@ function handlePick(cords: any) {
       </el-tooltip>
     </el-space>
     <div>
-      <slot name="address"/>
+      <slot name="address" />
     </div>
-    <pickCoordinate v-if="type !== 'selector'" style="margin-top: 6px" :coordinates="coordinates" v-show="visible" @pickChange="handlePick" />
+    <pickCoordinate v-if="type !== 'selector'" v-show="visible" style="margin-top: 6px" :coordinates="coordinates" @pickChange="handlePick" />
   </div>
 </template>

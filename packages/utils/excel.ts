@@ -4,22 +4,22 @@ import { saveAs } from 'file-saver'
 
 /**
  * 导出JSON到excel文件
- * @param {Object} param
+ * @param {object} param
  */
 export function exportJsonToExcel({
   columns, // 表头
   data, // 数据
   filename, // 导出excel文件名称
   style = {},
-  merges = [] // 合并行，行列下标从0开始 [{ start: { r: 开始行, c: 开始列 }, end: { r: 结束行, c: 结束列 }}]
+  merges = [], // 合并行，行列下标从0开始 [{ start: { r: 开始行, c: 开始列 }, end: { r: 结束行, c: 结束列 }}]
 } = {}) {
   style = {
     ...{
       autoWidth: true, // 自动列宽
       fillHeader: true, // 是否填充表头
-      headerRowCount: 1 // 表头行数
+      headerRowCount: 1, // 表头行数
     },
-    ...style
+    ...style,
   }
 
   const workbook = new ExcelJS.Workbook()
@@ -31,10 +31,10 @@ export function exportJsonToExcel({
   }
 
   if (typeof columns[0] !== 'object') {
-    columns = columns.map(item => {
+    columns = columns.map((item) => {
       return {
         header: item,
-        key: item
+        key: item,
       }
     })
   }
@@ -73,7 +73,7 @@ function setProp(worksheet, columns, workbook) {
     const column = worksheet.getColumn(item.key)
     // 数据校验
     if (item.$dataValidation) {
-      column.eachCell(function (cell, rowNumber) {
+      column.eachCell((cell, rowNumber) => {
         if (rowNumber !== 1) {
           const { longLen, formulae, ...rest } = item.$dataValidation
           if (longLen) {
@@ -94,41 +94,41 @@ function setProp(worksheet, columns, workbook) {
 
 /**
  * 设置样式
- * @param {Object} worksheet 工作簿
- * @param {Boolean} fillHeader 是否填充表头
- * @param {Number} headerRowCount 表头的行数
- * @param {Boolean} autoWidth 是否自动调整列宽
+ * @param {object} worksheet 工作簿
+ * @param {boolean} fillHeader 是否填充表头
+ * @param {number} headerRowCount 表头的行数
+ * @param {boolean} autoWidth 是否自动调整列宽
  */
 function setStyle(worksheet, { fillHeader, headerRowCount, autoWidth, customStyle }) {
-  worksheet.eachRow(function (row, rowNumber) {
+  worksheet.eachRow((row, rowNumber) => {
     // 对齐：垂直、水平居中
     row.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
 
     if (autoWidth && rowNumber === 1) {
       // 设置列宽
-      row.eachCell(function (cell, colNumber) {
+      row.eachCell((cell, colNumber) => {
         const column = worksheet.getColumn(colNumber)
         column.width = calcWidth(column.values)
       })
     }
 
     if (fillHeader && rowNumber <= headerRowCount) {
-      row.eachCell(function (cell) {
+      row.eachCell((cell) => {
         // 填充
         cell.font = {
-          color: { argb: 'FFFFFFFF' }
+          color: { argb: 'FFFFFFFF' },
         }
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
-          fgColor: { argb: 'FF999999' }
+          fgColor: { argb: 'FF999999' },
         }
         // 边框
         cell.border = {
           top: { style: 'thin', color: { argb: 'FFD5D5D5' } },
           left: { style: 'thin', color: { argb: 'FFD5D5D5' } },
           bottom: { style: 'thin', color: { argb: 'FFD5D5D5' } },
-          right: { style: 'thin', color: { argb: 'FFD5D5D5' } }
+          right: { style: 'thin', color: { argb: 'FFD5D5D5' } },
         }
       })
     }
@@ -140,11 +140,11 @@ function setStyle(worksheet, { fillHeader, headerRowCount, autoWidth, customStyl
 /**
  * 计算列单元格最大宽度
  * @param {Array} data 列的所有数据
- * @returns {Number}
+ * @returns {number}
  */
 function calcWidth(data) {
   let maxWidth = 0
-  data.forEach(val => {
+  data.forEach((val) => {
     const temp = val ? countWord(val.toString()) : 0
 
     if (maxWidth < temp) {
@@ -156,8 +156,8 @@ function calcWidth(data) {
 
 /**
  * 计算字符数
- * @param {String} str
- * @returns {Number}
+ * @param {string} str
+ * @returns {number}
  */
 function countWord(str) {
   let intLength = 0
@@ -174,7 +174,7 @@ function countWord(str) {
 /**
  * 导出table到excel
  * @param {Element} table
- * @param {String} filename
+ * @param {string} filename
  */
 export function exportTableToExcel({ table, filename, style }) {
   const [out, ranges] = generateArray(table)
@@ -184,7 +184,7 @@ export function exportTableToExcel({ table, filename, style }) {
     data: out,
     merges: ranges,
     style,
-    filename
+    filename,
   })
 }
 
@@ -206,10 +206,12 @@ function generateArray(table) {
       let colspan = cell.getAttribute('colspan')
       let rowspan = cell.getAttribute('rowspan')
       let cellValue = cell.innerText
-      if (cellValue !== '' && cellValue == +cellValue) cellValue = +cellValue
+      if (cellValue !== '' && cellValue == +cellValue) {
+        cellValue = +cellValue
+      }
 
       // Skip ranges
-      ranges.forEach(function ({ start, end }) {
+      ranges.forEach(({ start, end }) => {
         if (R >= start.r && R <= end.r && outRow.length >= start.c && outRow.length <= end.c) {
           for (let i = 0; i <= end.c - start.c; ++i) outRow.push(null)
         }
@@ -222,12 +224,12 @@ function generateArray(table) {
         ranges.push({
           start: {
             r: R,
-            c: outRow.length
+            c: outRow.length,
           },
           end: {
             r: R + rowspan - 1,
-            c: outRow.length + colspan - 1
-          }
+            c: outRow.length + colspan - 1,
+          },
         })
       }
 
@@ -246,16 +248,16 @@ function generateArray(table) {
 
 /**
  * 保存文件
- * @param {Object} workbook ExcelJS 工作表实例
- * @param {String} filename 文件名
+ * @param {object} workbook ExcelJS 工作表实例
+ * @param {string} filename 文件名
  */
 async function writeFile(workbook, filename = 'excel-js') {
   const buffer = await workbook.xlsx.writeBuffer()
   saveAs(
     new Blob([buffer], {
-      type: 'application/octet-stream'
+      type: 'application/octet-stream',
     }),
-    `${filename}.xlsx`
+    `${filename}.xlsx`,
   )
 }
 
@@ -271,7 +273,7 @@ export async function readExcelToJson(buffer) {
   await workbook.xlsx.load(buffer)
 
   const worksheet = workbook.getWorksheet(1) // 获取第一个worksheet
-  worksheet.eachRow(function (row, rowNumber) {
+  worksheet.eachRow((row, rowNumber) => {
     const rowValues = row.values
     rowValues.shift()
     if (rowNumber === 1) {
@@ -301,7 +303,7 @@ export async function readDryBeachExcelToJson(buffer) {
   await workbook.xlsx.load(buffer)
 
   const worksheet = workbook.getWorksheet(1) // 获取第一个worksheet
-  worksheet.eachRow(function (row, rowNumber) {
+  worksheet.eachRow((row, rowNumber) => {
     const rowValues = row.values
     rowValues.shift()
     if (rowNumber === 1) {
