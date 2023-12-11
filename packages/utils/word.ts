@@ -10,6 +10,7 @@ const IMAGE_TYPE = 'image/jpeg'
 // 导出图片的质量
 const IMAGE_QUALITY = 0.8
 
+
 /**
  * HTML导出Docx
  * @param {string} params.element 要导出的元素选择器
@@ -18,7 +19,7 @@ const IMAGE_QUALITY = 0.8
  * @param {string} params.orientation 页面方向 portrait：竖向、landscape：横向
  * @param {string} params.filename 导出文件名称
  */
-async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }) {
+async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: any) {
   const html = generateContent(element)
 
   const content = `
@@ -46,7 +47,7 @@ async function exportHtmlToDocx({ element, styleString, margins, orientation = '
  * @param {string} element 要导出的元素选择器
  * @returns {string}
  */
-function generateContent(element) {
+function generateContent(element: any) {
   const sourceElement = document.querySelector(element)
   let cloneElement = sourceElement.cloneNode(true)
 
@@ -62,23 +63,23 @@ function generateContent(element) {
  * @param {Element} sourceElement 要导出的元素
  * @returns {Element}
  */
-function convertImagesToDataUrl(cloneElement, sourceElement) {
+function convertImagesToDataUrl(cloneElement: any, sourceElement: any) {
   const sourceImages = sourceElement.querySelectorAll('img')
   const cloneImages = cloneElement.querySelectorAll('img')
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
-  sourceImages.forEach((imgElement, index) => {
+  sourceImages.forEach((imgElement: any, index: number) => {
     const width = imgElement.width
     const height = imgElement.height
 
     // preparing canvas for drawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx?.clearRect(0, 0, canvas.width, canvas.height)
     canvas.width = width
     canvas.height = height
 
     try {
-      ctx.drawImage(imgElement, 0, 0, width, height)
+      ctx?.drawImage(imgElement, 0, 0, width, height)
       // by default toDataURL() produces png image, but you can also export to jpeg
       // checkout function's documentation for more details
       const dataURL = canvas.toDataURL(IMAGE_TYPE, IMAGE_QUALITY)
@@ -100,11 +101,11 @@ function convertImagesToDataUrl(cloneElement, sourceElement) {
  * @param {Element} sourceElement 要导出的元素
  * @returns {Element}
  */
-function convertCanvasToDataUrl(cloneElement, sourceElement) {
+function convertCanvasToDataUrl(cloneElement: any, sourceElement: any) {
   const sourceCanvas = sourceElement.querySelectorAll('canvas')
   const cloneCanvas = cloneElement.querySelectorAll('canvas')
 
-  sourceCanvas.forEach((canvasElement, index) => {
+  sourceCanvas.forEach((canvasElement: any, index: number) => {
     const dataURL = canvasElement.toDataURL(IMAGE_TYPE, IMAGE_QUALITY)
     const imgElement = document.createElement('img')
     imgElement.src = dataURL

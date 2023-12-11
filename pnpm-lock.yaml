@@ -96,9 +96,12 @@ importers:
       markdown-it-container:
         specifier: ^3.0.0
         version: 3.0.0
+      postcss:
+        specifier: ^8.4.32
+        version: 8.4.32
       vitepress:
         specifier: 1.0.0-rc.31
-        version: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
+        version: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(postcss@8.4.32)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
 
   packages/assets: {}
 
@@ -1104,6 +1107,7 @@ packages:
     resolution: {integrity: sha512-9lhc4UZstsegbNLhH0Zu6TqvDfmhGzuCWtcTFXY10VjLLUe4Mr0Ye2L3rrtHaDd/J5+tFMEuo5LTCSCMXWfUKw==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -1112,6 +1116,7 @@ packages:
     resolution: {integrity: sha512-FfoOK1yP5ksX3wwZ4Zk1NgyGHZyuRhf99j64I5oEmirV8EFT7+OhUZEnP+x17lcP/QHJNWGsoJwrz4PJ9fBEXw==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -1120,6 +1125,7 @@ packages:
     resolution: {integrity: sha512-DNGZvZDO5YF7jN5fX8ZqmGLjZEXIJRdJEdTFMhiyXqyXubBa0WVLDWSNlQ5JR2PNgDbEV1VQowhVRUh+74D+RA==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -1128,6 +1134,7 @@ packages:
     resolution: {integrity: sha512-RkJVNVRM+piYy87HrKmhbexCHg3A6Z6MU0W9GHnJwBQNBeyhCJG9KDce4SAMdicQnpURggSvtbGo9xAWOfSvIQ==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -1470,7 +1477,7 @@ packages:
       vitepress: '*'
       vue: ^3.2.0
     dependencies:
-      vitepress: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
+      vitepress: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(postcss@8.4.32)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
       vue: 3.3.8(typescript@5.2.2)
     dev: true
 
@@ -1484,7 +1491,7 @@ packages:
       '@flypeng/tool': 5.4.0
       markdown-it: 13.0.2
       markdown-it-container: 3.0.0
-      vitepress: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
+      vitepress: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(postcss@8.4.32)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2)
       vue: 3.3.8(typescript@5.2.2)
     dev: true
 
@@ -1532,7 +1539,7 @@ packages:
       '@vue/shared': 3.3.8
       estree-walker: 2.0.2
       magic-string: 0.30.5
-      postcss: 8.4.31
+      postcss: 8.4.32
       source-map-js: 1.0.2
 
   /@vue/compiler-ssr@3.3.8:
@@ -4044,14 +4051,6 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss@8.4.31:
-    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
-
   /postcss@8.4.32:
     resolution: {integrity: sha512-D/kj5JNu6oo2EIy+XL/26JEDTlIbB8hw85G8StOE6L74RQAVVP5rej6wxCNqyMbR4RkPfqvezVbPw81Ngd6Kcw==}
     engines: {node: ^10 || ^12 || >=14}
@@ -4059,7 +4058,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: true
 
   /preact@10.19.2:
     resolution: {integrity: sha512-UA9DX/OJwv6YwP9Vn7Ti/vF80XL+YA5H2l7BpCtUr3ya8LWHFzpiO5R+N7dN16ujpIxhekRFuOOF82bXX7K/lg==}
@@ -4875,7 +4873,7 @@ packages:
     dependencies:
       '@types/node': 20.9.0
       esbuild: 0.18.20
-      postcss: 8.4.31
+      postcss: 8.4.32
       rollup: 3.29.4
       sass: 1.69.5
     optionalDependencies:
@@ -4919,7 +4917,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2):
+  /vitepress@1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.9.0)(axios@1.6.2)(postcss@8.4.32)(sass@1.69.5)(search-insights@2.11.0)(typescript@5.2.2):
     resolution: {integrity: sha512-ikH9pIjOOAbyoYAGBVfTz8TzuXp+UoWaIRMU4bw/oiTg8R65SbAaGKY84xx6TuL+f4VqUJ8lhzW82YyxSLvstA==}
     hasBin: true
     peerDependencies:
@@ -4942,6 +4940,7 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.3.0
       mrmime: 1.0.1
+      postcss: 8.4.32
       shikiji: 0.7.6
       shikiji-transformers: 0.7.6
       vite: 5.0.5(@types/node@20.9.0)(sass@1.69.5)

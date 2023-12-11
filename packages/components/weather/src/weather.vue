@@ -4,6 +4,14 @@ import { weatherImages } from '@zhdgps/constants'
 import { GetIPLocation, GetWeather } from '@zhdgps/utils'
 import { ElMessage } from 'element-plus'
 
+const props = defineProps({
+  size: {
+    type: String,
+    values: ['large', 'small'],
+    default: 'large',
+  },
+})
+
 const locationCity = ref<any>({})
 const forecasts = ref<any[]>([])
 const weatherData = ref<any>({})
@@ -11,6 +19,9 @@ const date = ref(0)
 const fetchLoading = ref(false)
 const dayIcon = ref('')
 const nightIcon = ref('')
+let scrollIntervalId: any = null
+let animateTimeoutId: any = null
+const weatherAnimate = ref(false)
 
 onMounted(async () => {
   fetchLoading.value = true
@@ -52,9 +63,19 @@ function fetchWeather() {
   return GetWeather(adcode, 'all').then((data) => {
     const { status, forecasts: forecastList = [] } = data || {}
     if (status === '1') {
-      forecasts.value = forecastList[0].casts.slice(0, 3) || []
+      forecasts.value = forecastList[0].casts.slice(0, 3).map((item: any, index: number) => {
+        return {
+          ...item,
+          cnDay: getDate(index),
+        }
+      }) || []
+      console.log(forecasts.value)
       weatherData.value = forecasts.value[0]
       console.log(weatherData.value)
+
+      if (props.size === 'small' && forecasts.value.length > 0) {
+        startScrollWeather()
+      }
     }
   })
 }
@@ -67,10 +88,58 @@ function handleDateChange() {
 function appendSuffix(value: string, suffix: string) {
   return value == null || value === '' ? '' : value + (suffix || '')
 }
+
+function startScrollWeather() {
+  stopScrollWeather()
+  scrollIntervalId = setInterval(() => {
+    weatherAnimate.value = true
+
+    animateTimeoutId = setTimeout(() => {
+      forecasts.value.push(forecasts.value.shift() || {})
+      weatherAnimate.value = false
+    }, 300)
+  }, 3000)
+}
+function stopScrollWeather() {
+  clearInterval(scrollIntervalId)
+  clearTimeout(animateTimeoutId)
+}
+
+function getDate(index: number) {
+  switch (index) {
+    case 0:
+      return '今天'
+    case 1:
+      return '明天'
+    case 2:
+      return '后天'
+    default:
+      break
+  }
+}
 </script>
 
 <template>
-  <div class="weather home-card">
+  <div
+    v-if="size === 'small'"
+    class="header-right-weather"
+    @mouseenter="stopScrollWeather"
+    @mouseleave="startScrollWeather"
+  >
+    <div class="header-right-weather-list" :class="{ 'header-right-weather-list--animate': weatherAnimate }">
+      <div v-for="{ dayweather, daytemp, week, cnDay } in forecasts" :key="week" class="header-right-weather-item">
+        <p class="header-right-weather__time">
+          <img class="header-right-weather__icon" :src="dayIcon" alt="weather">
+          <span>{{ cnDay }}</span>
+        </p>
+        <p class="header-right-weather-content">
+          <span v-if="daytemp != null" class="header-right-weather__temp">{{ daytemp }}℃</span>
+          <span class="header-right-weather__name">{{ dayweather }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div v-else class="weather home-card">
     <div class="home-card-header">
       <span class="home-card-header__name">天气情况</span>
       <span class="weather-updatetime">
@@ -85,7 +154,7 @@ function appendSuffix(value: string, suffix: string) {
       </span>
     </div>
     <div class="home-card-body">
-      <div class="weather-body" v-loading="fetchLoading">
+      <div v-loading="fetchLoading" class="weather-body">
         <div class="weather-content">
           <img class="weather-day__icon" :src="dayIcon" alt="">
           <div class="weather-content-feature">
@@ -120,17 +189,12 @@ function appendSuffix(value: string, suffix: string) {
 </template>
 
 <style lang="scss" scoped>
-.weather {
-  height: 166px;
-
-  img {
+img {
     vertical-align: middle;
     display: inline-block !important;
   }
-  p {
-    margin: 0;
-    font-weight: normal;
-  }
+.weather {
+  height: 166px;
 
   // @media (max-width: 1600px) {
   //   height: 348px;
@@ -141,6 +205,9 @@ function appendSuffix(value: string, suffix: string) {
     font-size: 12px;
     font-family: DingTalk-JinBuTi, sans-serif;
     color: #7485a3;
+    ::v-deep .el-radio-group {
+      font-size: unset;
+    }
   }
 
   &-body {
@@ -260,4 +327,39 @@ function appendSuffix(value: string, suffix: string) {
         height: calc(100% - $header-height);
       }
     }
+
+.header-right-weather {
+  overflow: hidden;
+  height: 58px;
+  font-size: 18px;
+  font-family: DingTalk-JinBuTi, sans-serif;
+  text-align: center;
+
+  &-list {
+    margin-top: 0;
+
+    &--animate {
+      margin-top: -58px;
+      transition: margin-top 0.3s;
+    }
+  }
+
+  &-item {
+    height: 58px;
+  }
+
+  &__temp {
+    margin-right: 8px;
+    font-family: DingTalk-Sans, sans-serif;
+  }
+
+  &__icon {
+    margin-right: 4px;
+    height: 28px;
+  }
+
+  &__time {
+    text-align: center;
+  }
+}
 </style>
