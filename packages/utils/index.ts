@@ -1,4 +1,5 @@
 export * from './vue'
-export * from './location'
 export * from './amap'
 export * from './cesium'
+export * from './tool'
+export * from './word'

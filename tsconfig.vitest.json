@@ -6,6 +6,6 @@
     "types": [],
     "skipLibCheck": true
   },
-  "include": ["packages", "vitest.setup.ts", "typings/env.d.ts"],
+  "include": ["packages", "vitest.setup.ts", "typings/env.d.ts", "packages/assets/json/*.json"],
   "exclude": ["node_modules", "dist", "**/*.md"]
 }

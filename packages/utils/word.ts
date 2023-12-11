@@ -1,15 +1,14 @@
 import { saveAs } from 'file-saver'
 
-// @see https://github.com/evidenceprime/html-docx-js
-import htmlDocx from 'html-docx-js/dist/html-docx'
+// @see https://github.com/caiyexiang/html-docx-js-typescript
+import { asBlob } from 'html-docx-js-typescript'
 
-import { sleep } from '@/utils'
+import { sleep } from '@zhdgps/utils'
 
 // 导出图片的格式
 const IMAGE_TYPE = 'image/jpeg'
 // 导出图片的质量
 const IMAGE_QUALITY = 0.8
-
 
 /**
  * HTML导出Docx
@@ -19,14 +18,17 @@ const IMAGE_QUALITY = 0.8
  * @param {string} params.orientation 页面方向 portrait：竖向、landscape：横向
  * @param {string} params.filename 导出文件名称
  */
-async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: any) {
+export async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: any) {
   const html = generateContent(element)
 
+  // 获取指定节点的ID
+  const targetNode: HTMLElement = document.querySelector(element)
+  const style = styleString || getClassAndStylesFromNode(targetNode)
   const content = `
     <!DOCTYPE html>
     <html>
       <head>
-        <style>${styleString ? styleString.replace(/(\s{2,}|\n)/g, '') : ''}</style>
+        <style>${style ? style.replace(/(\s{2,}|\n)/g, '') : ''}</style>
       </head>
       <body>${html}</body>
     </html>
@@ -34,10 +36,10 @@ async function exportHtmlToDocx({ element, styleString, margins, orientation = '
 
   // htmlDocx asBlob占用CPU
   await sleep(300)
-
-  const converted = htmlDocx.asBlob(content, { orientation, margins })
-
-  saveAs(converted, filename)
+  console.log('content :>> ', content)
+  asBlob(content, { orientation, margins }).then((data) => {
+    saveAs(data, filename)
+  })
 
   return Promise.resolve()
 }
@@ -55,6 +57,43 @@ function generateContent(element: any) {
   cloneElement = convertCanvasToDataUrl(cloneElement, sourceElement)
 
   return cloneElement.innerHTML
+}
+
+// 递归函数，获取节点及其子节点的类名和样式
+function getClassAndStylesFromNode(node: HTMLElement): string {
+  if (node) {
+    // 获取节点及其子节点的所有 class
+    const classes: string[] = [...node.classList]
+    const elements = node.querySelectorAll('*')
+    elements.forEach((element) => {
+      const classList = element.classList
+      classList.forEach((className) => {
+        if (!classes.includes(className)) {
+          classes.push(className)
+        }
+      })
+    })
+
+    // 获取 class 的样式配置
+    const styles: string[] = []
+    const styleSheets = document.styleSheets
+    for (let i = 0; i < styleSheets.length; i++) {
+      const styleSheet = styleSheets[i] as CSSStyleSheet
+      const rules = styleSheet.cssRules
+      for (let j = 0; j < rules.length; j++) {
+        const rule = rules[j] as CSSStyleRule
+        if (rule.selectorText && classes.some(cls => rule.selectorText.includes(`.${cls}`))) {
+          styles.push(`${rule.selectorText.replace(/(\[.*\])/, '')} {
+            ${rule.style.cssText}
+          }`)
+        }
+      }
+    }
+
+    return styles.join('\n')
+  }
+
+  return ''
 }
 
 /**
@@ -117,5 +156,3 @@ function convertCanvasToDataUrl(cloneElement: any, sourceElement: any) {
 
   return cloneElement
 }
-
-export default exportHtmlToDocx

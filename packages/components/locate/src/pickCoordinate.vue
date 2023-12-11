@@ -115,7 +115,6 @@ function getTdtUrl(lyr: string): string {
  */
 function addMarkerLayer(hasCoordinates: boolean) {
   markerFeature = new Feature()
-
   markerLayer = new VectorLayer({
     source: new VectorSource({
       features: [markerFeature],

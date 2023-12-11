@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import { ElButton } from 'element-plus';
-import { pcaOptions } from '@zhdgps/utils'
+import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
 import { onMounted, ref } from 'vue'
 import { AddLocation } from '@element-plus/icons-vue'
 import pickCoordinate from './pickCoordinate.vue'

@@ -156,7 +156,7 @@ function getDate(index: number) {
     <div class="home-card-body">
       <div v-loading="fetchLoading" class="weather-body">
         <div class="weather-content">
-          <img class="weather-day__icon" :src="dayIcon" alt="">
+          <img class="weather-content__icon" :src="dayIcon" alt="">
           <div class="weather-content-feature">
             <p>白天</p>
             <p>{{ weatherData.dayweather }}</p>
@@ -170,7 +170,7 @@ function getDate(index: number) {
           </p>
         </div>
         <div class="weather-content">
-          <img class="weather-day__icon" :src="nightIcon" alt="">
+          <img class="weather-content__icon" :src="nightIcon" alt="">
           <div class="weather-content-feature">
             <p>夜晚</p>
             <p>{{ weatherData.nightweather }}</p>
@@ -189,10 +189,6 @@ function getDate(index: number) {
 </template>
 
 <style lang="scss" scoped>
-img {
-    vertical-align: middle;
-    display: inline-block !important;
-  }
 .weather {
   height: 166px;
 
@@ -249,13 +245,14 @@ img {
     //   width: 100%;
     // }
 
-    &__icon,
     &-feature {
       display: inline-block;
       vertical-align: middle;
     }
 
     &__icon {
+      display: inline-block;
+      vertical-align: middle;
       margin-right: 24px;
       width: 56px;
       height: 56px;
@@ -303,30 +300,30 @@ img {
 }
 
 .home-card {
-      overflow: hidden;
-      border-radius: 8px;
-      background: #ffffff;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ffffff;
 
-      $header-height: 40px;
+  $header-height: 40px;
 
-      &-header {
-        padding: 0 16px;
-        height: $header-height;
-        background: #f7faff;
-        line-height: $header-height;
+  &-header {
+    padding: 0 16px;
+    height: $header-height;
+    background: #f7faff;
+    line-height: $header-height;
 
-        &__name {
-          font-size: 18px;
-          font-family: 'PingFang SC-Medium', 'PingFang SC', sans-serif;
-          font-weight: 500;
-          color: #7485a3;
-        }
-      }
-
-      &-body {
-        height: calc(100% - $header-height);
-      }
+    &__name {
+      font-size: 18px;
+      font-family: 'PingFang SC-Medium', 'PingFang SC', sans-serif;
+      font-weight: 500;
+      color: #7485a3;
     }
+  }
+
+  &-body {
+    height: calc(100% - $header-height);
+  }
+}
 
 .header-right-weather {
   overflow: hidden;
@@ -356,6 +353,8 @@ img {
   &__icon {
     margin-right: 4px;
     height: 28px;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   &__time {

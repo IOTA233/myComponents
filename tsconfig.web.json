@@ -8,7 +8,7 @@
     "skipLibCheck": true
   },
   "include": ["packages", "typings/components.d.ts", "typings/env.d.ts",
-    "packages/assets/json/*.json", "packages/assets/json/province-city-area.json"
+    "packages/assets/json/*.json"
   ],
   "exclude": [
     "node_modules",
