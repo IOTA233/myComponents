@@ -21,7 +21,7 @@ export default defineConfig({
           { text: 'Weather 天气', link: '/examples/Weather' },
           { text: 'Html2Word 转换html', link: '/examples/Html2Word' },
           { text: 'Json2Excel 导出excel', link: '/examples/Json2Excel' },
-          { text: 'DigtalAnimate 数字动画', link: '/examples/DigtalAnimate' },
+          { text: 'CountTo 数字动画', link: '/examples/CountTo' },
           { text: 'Satellite 卫星数据', link: '/examples/Satellite' },
         ],
       },

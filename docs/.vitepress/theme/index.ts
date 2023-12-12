@@ -13,6 +13,8 @@ import zhdComponents from '@zhdgps/components'
 import { ElementPlusContainer } from '@vitepress-demo-preview/component'
 import '@vitepress-demo-preview/component/dist/style.css'
 
+import './font.css'
+
 export default {
   ...DefaultTheme,
   enhanceApp(ctx) {
