@@ -339,6 +339,7 @@ function destroyMap() {
 
   &-header {
     margin-bottom: 8px;
+
     &-search {
       width: 220px;
     }
@@ -361,8 +362,8 @@ function destroyMap() {
     z-index: 666;
     font-size: 20px;
     white-space: nowrap;
-    color: #ffffff;
-    text-shadow: 0 0 4px #000000;
+    color: #fff;
+    text-shadow: 0 0 4px #000;
   }
 }
 </style>

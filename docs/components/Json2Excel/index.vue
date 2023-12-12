@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { exportJsonToExcel } from '@zhdgps/components'
-import type { Column, ExportParams, MergeRange } from '@zhdgps/components'
+import type { Column, ExportParams } from '@zhdgps/components'
 
 const tableData = [
   {

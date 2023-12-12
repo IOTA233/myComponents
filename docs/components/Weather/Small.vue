@@ -3,7 +3,3 @@
     <Weather size="small" />
   </div>
 </template>
-
-<style scoped>
-
-</style>

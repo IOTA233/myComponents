@@ -35,7 +35,7 @@ function handleReset() {
 <template>
   <el-space direction="vertical" alignment="flex-start" class="counter-number">
     <CountTo ref="counter1" :start-val="start" :end-val="end" :decimals="3" :duration="duration" :autoplay="false" suffix=" m" />
-    <CountTo ref="counter2" :start-val="0" :end-val="10.001" :decimals="3" suffix=" m" :duration="10000" :use-easing="false" />
+    <CountTo ref="counter2" :start-val="0" :end-val="1.01" :decimals="2" suffix=" m" :duration="10000" :use-easing="false" />
     <el-space>
       <el-button type="default" @click="handleStart">
         开始

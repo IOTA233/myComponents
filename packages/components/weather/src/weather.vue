@@ -30,13 +30,15 @@ onMounted(async () => {
   fetchLoading.value = false
 })
 watch(weatherData, async () => {
-  const nightCode = weatherImages.get(weatherData.value.nightweather) || '999'
-  const dayCode = weatherImages.get(weatherData.value.nightweather) || '999'
-  const nightModule = await import(`../../../assets/img/weather/${nightCode}.png`)
-  const dayModule = await import(`../../../assets/img/weather/${dayCode}.png`)
-  dayIcon.value = dayModule.default
-  nightIcon.value = nightModule.default
+  dayIcon.value = await getIcon(weatherData.value.dayweather)
+  nightIcon.value = await getIcon(weatherData.value.nightweather)
 })
+
+async function getIcon(weather: string) {
+  const code = weatherImages.get(weather) || '999'
+  const module = await import(`../../../assets/img/weather/${code}.png`)
+  return module.default
+}
 // 根据IP获取定位信息
 function fetchIPLocation() {
   return GetIPLocation().then((data) => {
@@ -201,6 +203,7 @@ function getDate(index: number) {
     font-size: 12px;
     font-family: DingTalk-JinBuTi, sans-serif;
     color: #7485a3;
+
     ::v-deep .el-radio-group {
       font-size: unset;
     }
@@ -218,7 +221,7 @@ function getDate(index: number) {
       bottom: 22px;
       left: 50%;
       width: 1px;
-      background: #eeeeee;
+      background: #eee;
       content: '';
     }
 
@@ -248,6 +251,7 @@ function getDate(index: number) {
     &-feature {
       display: inline-block;
       vertical-align: middle;
+      margin-left: 16px;
     }
 
     &__icon {
@@ -262,10 +266,6 @@ function getDate(index: number) {
     &-wind {
       font-size: 14px;
       color: #4b4b4b;
-    }
-
-    &-feature {
-      margin-left: 16px;
     }
 
     &-wind {
@@ -301,8 +301,8 @@ function getDate(index: number) {
 
 .home-card {
   overflow: hidden;
+  background: #fff;
   border-radius: 8px;
-  background: #ffffff;
 
   $header-height: 40px;
 
@@ -351,9 +351,9 @@ function getDate(index: number) {
   }
 
   &__icon {
+    display: inline-block;
     margin-right: 4px;
     height: 28px;
-    display: inline-block;
     vertical-align: middle;
   }
 
