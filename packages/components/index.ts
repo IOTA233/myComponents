@@ -1,6 +1,7 @@
 import type { App, Component } from 'vue'
 
-import { exportHtmlToDocx } from '@zhdgps/utils'
+import { exportHtmlToDocx, exportJsonToExcel } from '@zhdgps/utils'
+import type { Column, ExportParams, MergeRange } from '@zhdgps/constants'
 import Locate from './locate'
 import Weather from './weather'
 
@@ -26,7 +27,8 @@ const install: any = (app: any) => {
 }
 
 // 按需引入
-export { Locate, Weather, exportHtmlToDocx }
+export { Locate, Weather, exportHtmlToDocx, exportJsonToExcel }
+export type { Column, ExportParams, MergeRange }
 export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
   install,

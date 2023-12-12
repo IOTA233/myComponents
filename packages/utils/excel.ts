@@ -1,44 +1,45 @@
-// @link https://github.com/exceljs/exceljs
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
+import type { Column, ExportParams, MergeRange } from '@zhdgps/constants'
 
 /**
  * 导出JSON到excel文件
- * @param {object} param
+ * @param {object} param 导出excel参数
+ * @param {(Column | string)[]} param.columns 表头
+ * @param {Array} param.data 数据
+ * @param {string} param.filename 导出excel文件名称
+ * @param {object} param.style 样式
+ * @param {MergeRange[]} param.merges 合并行
  */
 export function exportJsonToExcel({
-  columns, // 表头
-  data, // 数据
-  filename, // 导出excel文件名称
+  columns,
+  data,
+  filename,
   style = {},
-  merges = [], // 合并行，行列下标从0开始 [{ start: { r: 开始行, c: 开始列 }, end: { r: 结束行, c: 结束列 }}]
-} = {}) {
+  merges = [],
+}: ExportParams): Promise<void> {
   style = {
-    ...{
-      autoWidth: true, // 自动列宽
-      fillHeader: true, // 是否填充表头
-      headerRowCount: 1, // 表头行数
-    },
+    autoWidth: true,
+    fillHeader: true,
+    headerRowCount: 1,
     ...style,
   }
 
   const workbook = new ExcelJS.Workbook()
   const worksheet = workbook.addWorksheet('Sheet1')
-
   // 设置工作簿属性，默认列宽
   if (!style.autoWidth) {
     worksheet.properties.defaultColWidth = 15
   }
 
   if (typeof columns[0] !== 'object') {
-    columns = columns.map((item) => {
-      return {
-        header: item,
-        key: item,
-      }
-    })
+    columns = columns.map((item: any) => ({
+      header: item,
+      key: item,
+    }))
   }
-  worksheet.columns = columns
+
+  worksheet.columns = columns as Column[]
   worksheet.addRows(data)
 
   // 合并行
@@ -47,24 +48,22 @@ export function exportJsonToExcel({
     worksheet.mergeCells(start.r + 1, start.c + 1, end.r + 1, end.c + 1)
   })
 
-  setProp(worksheet, columns, workbook)
+  setProp(worksheet, columns as Column[], workbook)
+  setStyle(worksheet, style) // 设置样式
 
-  // 设置样式
-  setStyle(worksheet, style)
-
-  // 添加回调处理
-  return writeFile(workbook, filename)
+  return writeFile(workbook, filename) // 添加回调处理
 }
 
 /**
  * 设置单元格属性，如注释、数据校验
  */
-function setProp(worksheet, columns, workbook) {
+function setProp(worksheet: any, columns: Column[], workbook: any): void {
   const header = worksheet.getRow(1)
   const newSheet = workbook.addWorksheet('Sheet2')
 
   columns.forEach((item, index) => {
     const headerCell = header.getCell(item.key)
+
     // 单元格注释
     if (item.$note) {
       headerCell.note = item.$note
@@ -73,9 +72,10 @@ function setProp(worksheet, columns, workbook) {
     const column = worksheet.getColumn(item.key)
     // 数据校验
     if (item.$dataValidation) {
-      column.eachCell((cell, rowNumber) => {
+      column.eachCell((cell: any, rowNumber: number) => {
         if (rowNumber !== 1) {
           const { longLen, formulae, ...rest } = item.$dataValidation
+
           if (longLen) {
             const newCol = newSheet.getColumn(index)
             newCol.values = formulae.split(',')
@@ -99,30 +99,24 @@ function setProp(worksheet, columns, workbook) {
  * @param {number} headerRowCount 表头的行数
  * @param {boolean} autoWidth 是否自动调整列宽
  */
-function setStyle(worksheet, { fillHeader, headerRowCount, autoWidth, customStyle }) {
-  worksheet.eachRow((row, rowNumber) => {
+function setStyle(worksheet: any, { fillHeader, headerRowCount, autoWidth, customStyle }: any): void {
+  worksheet.eachRow((row: any, rowNumber: number) => {
     // 对齐：垂直、水平居中
     row.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
 
     if (autoWidth && rowNumber === 1) {
       // 设置列宽
-      row.eachCell((cell, colNumber) => {
+      row.eachCell((cell: any, colNumber: number) => {
         const column = worksheet.getColumn(colNumber)
         column.width = calcWidth(column.values)
       })
     }
 
     if (fillHeader && rowNumber <= headerRowCount) {
-      row.eachCell((cell) => {
+      row.eachCell((cell: any) => {
         // 填充
-        cell.font = {
-          color: { argb: 'FFFFFFFF' },
-        }
-        cell.fill = {
-          type: 'pattern',
-          pattern: 'solid',
-          fgColor: { argb: 'FF999999' },
-        }
+        cell.font = { color: { argb: 'FFFFFFFF' } }
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF999999' } }
         // 边框
         cell.border = {
           top: { style: 'thin', color: { argb: 'FFD5D5D5' } },
@@ -142,7 +136,7 @@ function setStyle(worksheet, { fillHeader, headerRowCount, autoWidth, customStyl
  * @param {Array} data 列的所有数据
  * @returns {number}
  */
-function calcWidth(data) {
+function calcWidth(data: any[]): number {
   let maxWidth = 0
   data.forEach((val) => {
     const temp = val ? countWord(val.toString()) : 0
@@ -159,7 +153,7 @@ function calcWidth(data) {
  * @param {string} str
  * @returns {number}
  */
-function countWord(str) {
+function countWord(str: string): number {
   let intLength = 0
   for (let i = 0; i < str.length; i++) {
     if (str.charCodeAt(i) < 0 || str.charCodeAt(i) > 255) {
@@ -176,7 +170,7 @@ function countWord(str) {
  * @param {Element} table
  * @param {string} filename
  */
-export function exportTableToExcel({ table, filename, style }) {
+export function exportTableToExcel({ table, filename, style }: { table: any, filename: string, style: any }): Promise<void> {
   const [out, ranges] = generateArray(table)
 
   return exportJsonToExcel({
@@ -193,7 +187,7 @@ export function exportTableToExcel({ table, filename, style }) {
  * @param {Element} table
  * @returns {Array} [数据，合并单元格]
  */
-function generateArray(table) {
+function generateArray(table: any): [any[], MergeRange[]] {
   const out = []
   const rows = table.querySelectorAll('tr')
   const ranges = []
@@ -205,7 +199,7 @@ function generateArray(table) {
       const cell = columns[C]
       let colspan = cell.getAttribute('colspan')
       let rowspan = cell.getAttribute('rowspan')
-      let cellValue = cell.innerText
+      let cellValue = cell.textContent
       if (cellValue !== '' && cellValue == +cellValue) {
         cellValue = +cellValue
       }
@@ -251,75 +245,40 @@ function generateArray(table) {
  * @param {object} workbook ExcelJS 工作表实例
  * @param {string} filename 文件名
  */
-async function writeFile(workbook, filename = 'excel-js') {
+async function writeFile(workbook: any, filename = 'excel-js'): Promise<void> {
   const buffer = await workbook.xlsx.writeBuffer()
-  saveAs(
-    new Blob([buffer], {
-      type: 'application/octet-stream',
-    }),
-    `${filename}.xlsx`,
-  )
+  saveAs(new Blob([buffer], { type: 'application/octet-stream' }), `${filename}.xlsx`)
 }
 
 /**
  * 读取excel文件
  * @param {ArrayBuffer} buffer
  */
-export async function readExcelToJson(buffer) {
-  let columns = []
-  const data = []
+export async function readExcelToJson(buffer: ArrayBuffer): Promise<{ columns: any[], data: any[] }> {
+  let columns: any[] = []
+  const data: any[] = []
 
   const workbook = new ExcelJS.Workbook()
   await workbook.xlsx.load(buffer)
 
   const worksheet = workbook.getWorksheet(1) // 获取第一个worksheet
-  worksheet.eachRow((row, rowNumber) => {
-    const rowValues = row.values
-    rowValues.shift()
-    if (rowNumber === 1) {
-      columns = rowValues
-    } else {
-      const sheetToJson = {}
-      rowValues.forEach((item, index) => {
-        sheetToJson[columns[index]] = item
-      })
-      data.push(sheetToJson)
-    }
-  })
-
-  return { columns, data }
-}
-
-/**
- * 读取干滩长度曲线excel文件
- * @param {ArrayBuffer} buffer
- */
-export async function readDryBeachExcelToJson(buffer) {
-  let columns = []
-  const data = []
-  let height = 0 // 滩顶高程
-  let columnsDryBeach = '' // 滩顶高程表头名称
-  const workbook = new ExcelJS.Workbook()
-  await workbook.xlsx.load(buffer)
-
-  const worksheet = workbook.getWorksheet(1) // 获取第一个worksheet
-  worksheet.eachRow((row, rowNumber) => {
-    const rowValues = row.values
-    rowValues.shift()
-    if (rowNumber === 1) {
-      height = rowValues[1] || 0
-      columnsDryBeach = rowValues[0]
-    } else if (rowNumber === 2) {
-      columns = [...rowValues, columnsDryBeach]
-    } else {
-      const sheetToJson = {}
-      rowNumber = [...rowValues, height]
-      rowNumber.forEach((item, index) => {
-        sheetToJson[columns[index]] = item
-      })
-      data.push(sheetToJson)
-    }
-  })
+  if (worksheet) {
+    worksheet.eachRow((row, rowNumber) => {
+      const rowValues = row.values
+      if (Array.isArray(rowValues)) {
+        rowValues.shift()
+        if (rowNumber === 1) {
+          columns = rowValues
+        } else {
+          const sheetToJson: any = {}
+          rowValues.forEach((item, index) => {
+            sheetToJson[columns[index]] = item
+          })
+          data.push(sheetToJson)
+        }
+      }
+    })
+  }
 
   return { columns, data }
 }

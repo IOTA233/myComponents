@@ -38,7 +38,7 @@ export async function exportHtmlToDocx({ element, styleString, margins, orientat
   await sleep(300)
   console.log('content :>> ', content)
   asBlob(content, { orientation, margins }).then((data) => {
-    saveAs(data, filename)
+    saveAs(data as Blob, filename)
   })
 
   return Promise.resolve()
@@ -83,8 +83,21 @@ function getClassAndStylesFromNode(node: HTMLElement): string {
       for (let j = 0; j < rules.length; j++) {
         const rule = rules[j] as CSSStyleRule
         if (rule.selectorText && classes.some(cls => rule.selectorText.includes(`.${cls}`))) {
+          let styleText = rule.style.cssText
+
+          // 解析自定义属性
+          const customProperties = styleText.match(/var\(--[\w-]*\)/g)
+          console.log('customProperties :>> ', getComputedStyle(node))
+          if (customProperties) {
+            customProperties.forEach((prop) => {
+              const propertyName = prop.substring(4, prop.length - 1) // 提取自定义属性名
+              const computedValue = getComputedStyle(node).getPropertyValue(`--${propertyName}`).trim()
+              styleText = styleText.replace(prop, computedValue)
+            })
+          }
+
           styles.push(`${rule.selectorText.replace(/(\[.*\])/, '')} {
-            ${rule.style.cssText}
+            ${styleText}
           }`)
         }
       }

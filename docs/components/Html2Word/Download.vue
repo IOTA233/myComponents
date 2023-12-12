@@ -1,16 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import type { TabPaneName, TabsPaneContext } from 'element-plus'
 
 import { exportHtmlToDocx } from '@zhdgps/components'
 
 const activeName = ref('first')
 
-const cityCode = ref([])
-const address = ref('')
-
-async function handleClick(tab: TabsPaneContext, event: Event) {
-  console.log(tab, event)
+async function handleClick() {
   await exportHtmlToDocx({
     element: '#node',
     styleString: ``,
