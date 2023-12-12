@@ -1,3 +1,4 @@
+/* eslint-disable ts/no-loss-of-precision */
 /**
  * Created by Wandergis on 2015/7/8.
  * @see https://github.com/wandergis/coordtransform

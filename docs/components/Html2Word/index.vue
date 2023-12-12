@@ -95,9 +95,3 @@ async function handleClick() {
     </el-tab-pane>
   </el-tabs>
 </template>
-
-<style>
-.demo-tabs > .el-tabs__content {
-  color: #6b778c;
-}
-</style>
