@@ -1,25 +1,24 @@
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
-import type { Column, ExportParams, MergeRange } from '@zhdgps/constants'
+import type { Column, ExcelOption, ExcelStyle, MergeRange } from '@zhdgps/constants'
 
 /**
  * 导出JSON到excel文件
  * @param {object} params 导出excel配置
  */
-export function TransJsonToExcel(params: ExportParams): Promise<void> {
+export function TransJsonToExcel(params: ExcelOption): Promise<void> {
   let {
     columns,
     data,
     filename,
-    style = {},
     merges = [],
   } = params
-  style = {
+  const style = {
     autoWidth: true,
     fillHeader: true,
     headerRowCount: 1,
-    ...style,
-  }
+    ...params.style,
+  } as ExcelStyle
 
   const workbook = new ExcelJS.Workbook()
   const worksheet = workbook.addWorksheet('Sheet1')
@@ -48,6 +47,22 @@ export function TransJsonToExcel(params: ExportParams): Promise<void> {
   setStyle(worksheet, style) // 设置样式
 
   return writeFile(workbook, filename) // 添加回调处理
+}
+
+/**
+ * 导出table到excel
+ * @param {ExcelOption} params 导出excel配置
+ */
+export function TransTableToExcel({ table, filename, style }: ExcelOption): Promise<void> {
+  const [out, ranges] = generateArray(table)
+
+  return TransJsonToExcel({
+    columns: [],
+    data: out,
+    merges: ranges,
+    style,
+    filename,
+  })
 }
 
 /**
@@ -158,23 +173,6 @@ function countWord(str: string): number {
     }
   }
   return intLength
-}
-
-/**
- * 导出table到excel
- * @param {Element} table
- * @param {string} filename
- */
-export function TransTableToExcel({ table, filename, style }: { table: any, filename: string, style: any }): Promise<void> {
-  const [out, ranges] = generateArray(table)
-
-  return TransJsonToExcel({
-    columns: [], // 表头
-    data: out,
-    merges: ranges,
-    style,
-    filename,
-  })
 }
 
 /**

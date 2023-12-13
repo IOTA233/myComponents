@@ -1,16 +1,17 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { word } from '@zhdgps/components/utils'
+import { doc } from '@zhdgps/components/utils'
+import type { DocOption } from '@zhdgps/components/types'
 
 const activeName = ref('first')
 
 async function handleClick() {
-  await word.exportHtmlToDocx({
+  await doc.ExportHtmlToDocx({
     element: '#node',
     styleString: ``,
     filename: 'locate',
-  })
+  } as DocOption)
 }
 </script>
 

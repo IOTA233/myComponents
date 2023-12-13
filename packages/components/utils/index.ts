@@ -1,1 +1,1 @@
-export { word, excel, amap, gis } from '@zhdgps/utils'
+export { doc, excel, amap, gis } from '@zhdgps/utils'

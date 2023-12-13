@@ -34,5 +34,5 @@ demo-preview=../components/Weather/GetWeather.vue
 
 | 参数             | 说明                                             | 类型                            | 默认值  |
 | :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
-| adcode             | 行政编码                                             |`'base'\| 'all'` | `'base'` |
-| extensions             | 气象类型                                             |  'base / 'all / 'success / 'warning / 'danger' | - |
+| adcode             | 行政编码                                             |string | - |
+| extensions             | 气象类型                                             |  `'base'\| 'all'` | `'base'` |

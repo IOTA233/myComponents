@@ -201,7 +201,6 @@ function getDate(index: number) {
   &-updatetime {
     float: right;
     font-size: 12px;
-    font-family: DingTalk-JinBuTi, sans-serif;
     color: #7485a3;
 
     ::v-deep .el-radio-group {
@@ -293,7 +292,6 @@ function getDate(index: number) {
 
     &__value {
       font-size: 40px;
-      font-family: DingTalk-Sans, sans-serif;
       color: #3ab8ff;
     }
   }
@@ -314,9 +312,8 @@ function getDate(index: number) {
 
     &__name {
       font-size: 18px;
-      font-family: 'PingFang SC-Medium', 'PingFang SC', sans-serif;
       font-weight: 500;
-      color: var(--el-button-text-color);
+      color: black;
     }
   }
 
@@ -329,7 +326,6 @@ function getDate(index: number) {
   overflow: hidden;
   height: 58px;
   font-size: 18px;
-  font-family: DingTalk-JinBuTi, sans-serif;
   text-align: center;
 
   &-list {
@@ -347,7 +343,6 @@ function getDate(index: number) {
 
   &__temp {
     margin-right: 8px;
-    font-family: DingTalk-Sans, sans-serif;
   }
 
   &__icon {

@@ -4,13 +4,13 @@
 
 :::preview title || component description content
 
-demo-preview=../components/Html2Word/index.vue
+demo-preview=../components/Html2Doc/index.vue
 
 :::
 
 
 ## API
-## 方法: exportHtmlToDocx
+## 方法: ExportHtmlToDocx
 
 | 参数             | 描述                                             | 类型                            | 默认值  |
 | :--------------- | :----------------------------------------------- | :------------------------------ | :------ |

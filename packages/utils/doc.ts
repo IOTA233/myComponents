@@ -5,6 +5,8 @@ import { asBlob } from 'html-docx-js-typescript'
 
 import { sleep } from '@zhdgps/utils'
 
+import type { DocOption } from '@zhdgps/constants'
+
 // 导出图片的格式
 const IMAGE_TYPE = 'image/jpeg'
 // 导出图片的质量
@@ -12,18 +14,17 @@ const IMAGE_QUALITY = 0.8
 
 /**
  * HTML导出Docx
- * @param {string} params.element 要导出的元素选择器
- * @param {string} params.styleString 样式字符串
- * @param {object} params.margins 页边距 {top: 1440}，1440 i.e. 2.54 cm
- * @param {string} params.orientation 页面方向 portrait：竖向、landscape：横向
- * @param {string} params.filename 导出文件名称
+ * @param {string} params 要导出的Html配置
  */
-export async function exportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: any) {
+export async function ExportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: DocOption) {
   const html = generateContent(element)
 
   // 获取指定节点的ID
-  const targetNode: HTMLElement = document.querySelector(element)
-  const style = styleString || getClassAndStylesFromNode(targetNode)
+  const targetNode: HTMLElement | null = document.querySelector(element)
+  if (targetNode == null) {
+    return Promise.resolve()
+  }
+  const style = `${styleString} ${getClassAndStylesFromNode(targetNode)}`
   const content = `
     <!DOCTYPE html>
     <html>
@@ -36,7 +37,6 @@ export async function exportHtmlToDocx({ element, styleString, margins, orientat
 
   // htmlDocx asBlob占用CPU
   await sleep(300)
-  console.log('content :>> ', content)
   asBlob(content, { orientation, margins }).then((data) => {
     saveAs(data as Blob, filename)
   })
@@ -59,7 +59,11 @@ function generateContent(element: any) {
   return cloneElement.innerHTML
 }
 
-// 递归函数，获取节点及其子节点的类名和样式
+/**
+ * 递归函数，获取节点及其子节点的类名和样式
+ * @param node 获取节点及其子节点的类名和样式
+ * @returns 样式
+ */
 function getClassAndStylesFromNode(node: HTMLElement): string {
   if (node) {
     // 获取节点及其子节点的所有 class

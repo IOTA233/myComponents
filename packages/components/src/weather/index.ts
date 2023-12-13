@@ -1,5 +1,5 @@
 import { withInstall } from '@zhdgps/utils'
-import Component from './src/weather.vue'
+import Component from './index.vue'
 
 const Weather = withInstall(Component)
 export default Weather
