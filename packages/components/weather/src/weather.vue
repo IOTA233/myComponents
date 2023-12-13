@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import { weatherImages } from '@zhdgps/constants'
-import { GetIPLocation, GetWeather } from '@zhdgps/utils'
-import { ElMessage } from 'element-plus'
+import { GetIPLocation, GetWeather } from '@zhdgps/utils/amap'
+import '../../styles/index.scss'
 
 const props = defineProps({
   size: {
@@ -221,7 +221,7 @@ function getDate(index: number) {
       bottom: 22px;
       left: 50%;
       width: 1px;
-      background: #eee;
+      background: #eeeeee;
       content: '';
     }
 
@@ -301,8 +301,8 @@ function getDate(index: number) {
 
 .home-card {
   overflow: hidden;
-  background: #fff;
   border-radius: 8px;
+  background: #ffffff;
 
   $header-height: 40px;
 
@@ -316,7 +316,7 @@ function getDate(index: number) {
       font-size: 18px;
       font-family: 'PingFang SC-Medium', 'PingFang SC', sans-serif;
       font-weight: 500;
-      color: #7485a3;
+      color: var(--el-button-text-color);
     }
   }
 

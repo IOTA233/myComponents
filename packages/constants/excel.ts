@@ -21,14 +21,41 @@ export interface MergeRange {
   end: { r: number, c: number }
 }
 
+/**
+ * 导出excel配置
+ */
 export interface ExportParams {
+  /**
+   * 表头列表
+   */
   columns: (Column | string)[]
+  /**
+   * 数据源
+   */
   data: any[]
+  /**
+   * 文件名称
+   */
   filename: string
+  /**
+   * 样式配置
+   */
   style?: {
-    autoWidth?: boolean // 自动列宽
-    fillHeader?: boolean // 是否填充表头
-    headerRowCount?: number // 表头行数
+    /**
+     * 自动列宽
+     */
+    autoWidth?: boolean
+    /**
+     * 是否填充表头
+     */
+    fillHeader?: boolean
+    /**
+     * 表头行数
+     */
+    headerRowCount?: number
+    /**
+     * 自定义样式
+     */
     customStyle?: (worksheet: any) => void
   }
   merges?: MergeRange[]

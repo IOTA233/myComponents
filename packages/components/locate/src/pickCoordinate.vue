@@ -11,7 +11,8 @@ import { Icon, Style } from 'ol/style'
 
 import type { GeoCode } from '@zhdgps/constants'
 import { tiandituKey } from '@zhdgps/constants'
-import { GetGeocode, GetReGeocode, gcj02towgs84, wgs84togcj02 } from '@zhdgps/utils'
+import { GetGeocode, GetReGeocode } from '@zhdgps/utils/amap'
+import { gcj02towgs84, wgs84togcj02 } from '@zhdgps/utils/gis'
 
 import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
 import markerIcon from '@zhdgps/assets/img/inspect/marker.png'
@@ -104,7 +105,7 @@ function setupMap() {
 /**
  * 获取天地图底图
  * @param {string} lyr 图层名称
- * @returns {string}
+ * @returns {string} 天地图底图
  */
 function getTdtUrl(lyr: string): string {
   return `https://t{0-7}.tianditu.gov.cn/${lyr}_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=${lyr}&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${tiandituKey}`
@@ -208,12 +209,6 @@ async function handleChange() {
     districtCode: geo.districtCode || [],
     coordinate: wgs84Coordinate,
   })
-  console.log({
-    address: geo.address || '',
-    district: geo.district || [],
-    districtCode: geo.districtCode || [],
-    coordinate: wgs84Coordinate,
-  })
 }
 /**
  * 逆地理编码
@@ -238,6 +233,7 @@ async function fetchReGeoCode(wgs84Coordinate: Array<any>) {
     return { address: formattedAddress, ...flatMap(adcodeTree) }
   }
 }
+
 /**
  * 获取扁平化的地区编码
  * @param {Array} tree 源数据 [{value,label,children:[]}]
@@ -269,7 +265,7 @@ function deal(nodes: any[], predicate: Function): Array<any> | undefined {
     return
   }
 
-  const newChildren = []
+  const newChildren: any[] = []
   nodes = JSON.parse(JSON.stringify(nodes))
   for (const node of nodes) {
     const subs = deal(node.children, predicate)
@@ -284,6 +280,9 @@ function deal(nodes: any[], predicate: Function): Array<any> | undefined {
   }
   return newChildren.length ? newChildren : void 0
 }
+/**
+ * 销毁地图
+ */
 function destroyMap() {
   if (!mapInstance) {
     return
@@ -362,8 +361,8 @@ function destroyMap() {
     z-index: 666;
     font-size: 20px;
     white-space: nowrap;
-    color: #fff;
-    text-shadow: 0 0 4px #000;
+    color: #ffffff;
+    text-shadow: 0 0 4px #000000;
   }
 }
 </style>

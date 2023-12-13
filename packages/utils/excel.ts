@@ -4,20 +4,16 @@ import type { Column, ExportParams, MergeRange } from '@zhdgps/constants'
 
 /**
  * 导出JSON到excel文件
- * @param {object} param 导出excel参数
- * @param {(Column | string)[]} param.columns 表头
- * @param {Array} param.data 数据
- * @param {string} param.filename 导出excel文件名称
- * @param {object} param.style 样式
- * @param {MergeRange[]} param.merges 合并行
+ * @param {object} params 导出excel配置
  */
-export function exportJsonToExcel({
-  columns,
-  data,
-  filename,
-  style = {},
-  merges = [],
-}: ExportParams): Promise<void> {
+export function TransJsonToExcel(params: ExportParams): Promise<void> {
+  let {
+    columns,
+    data,
+    filename,
+    style = {},
+    merges = [],
+  } = params
   style = {
     autoWidth: true,
     fillHeader: true,
@@ -60,7 +56,6 @@ export function exportJsonToExcel({
 function setProp(worksheet: any, columns: Column[], workbook: any): void {
   const header = worksheet.getRow(1)
   const newSheet = workbook.addWorksheet('Sheet2')
-
   columns.forEach((item, index) => {
     const headerCell = header.getCell(item.key)
 
@@ -170,10 +165,10 @@ function countWord(str: string): number {
  * @param {Element} table
  * @param {string} filename
  */
-export function exportTableToExcel({ table, filename, style }: { table: any, filename: string, style: any }): Promise<void> {
+export function TransTableToExcel({ table, filename, style }: { table: any, filename: string, style: any }): Promise<void> {
   const [out, ranges] = generateArray(table)
 
-  return exportJsonToExcel({
+  return TransJsonToExcel({
     columns: [], // 表头
     data: out,
     merges: ranges,
@@ -188,11 +183,11 @@ export function exportTableToExcel({ table, filename, style }: { table: any, fil
  * @returns {Array} [数据，合并单元格]
  */
 function generateArray(table: any): [any[], MergeRange[]] {
-  const out = []
+  const out: any[] = []
   const rows = table.querySelectorAll('tr')
-  const ranges = []
+  const ranges: any[] = []
   for (let R = 0; R < rows.length; ++R) {
-    const outRow = []
+    const outRow: any[] = []
     const row = rows[R]
     const columns = row.querySelectorAll('th, td')
     for (let C = 0; C < columns.length; ++C) {

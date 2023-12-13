@@ -1,5 +1,3 @@
-export const INSTALLED_KEY = Symbol('INSTALLED_KEY')
-
 /**
  * 高德开发者apikey，18520214928
  * @see https://console.amap.com/

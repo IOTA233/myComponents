@@ -14,11 +14,11 @@ const ee = 0.00669342162296594323
 /**
  * 百度坐标系 (BD-09) 与 火星坐标系 (GCJ-02)的转换
  * 即 百度 转 谷歌、高德
- * @param bd_lon
- * @param bd_lat
- * @returns {*[]}
+ * @param bd_lon 经度
+ * @param bd_lat 纬度
+ * @returns {*[]} 火星坐标
  */
-function bd09togcj02(bd_lon: number, bd_lat: number) {
+function bd09togcj02(bd_lon: number, bd_lat: number): any[] {
   const X_PI = (3.14159265358979324 * 3000.0) / 180.0
   const x = bd_lon - 0.0065
   const y = bd_lat - 0.006
@@ -32,11 +32,11 @@ function bd09togcj02(bd_lon: number, bd_lat: number) {
 /**
  * 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的转换
  * 即谷歌、高德 转 百度
- * @param lng
- * @param lat
- * @returns {*[]}
+ * @param lng 经度
+ * @param lat 纬度
+ * @returns {*[]} 百度坐标
  */
-function gcj02tobd09(lng: number, lat: number) {
+function gcj02tobd09(lng: number, lat: number): any[] {
   const z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * X_PI)
   const theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * X_PI)
   const bd_lng = z * Math.cos(theta) + 0.0065
@@ -46,11 +46,11 @@ function gcj02tobd09(lng: number, lat: number) {
 
 /**
  * WGS84转GCj02
- * @param lng
- * @param lat
- * @returns {*[]}
+ * @param lng 经度
+ * @param lat 纬度
+ * @returns {*[]} GCj02坐标
  */
-function wgs84togcj02(lng: number, lat: number) {
+function wgs84togcj02(lng: number, lat: number): any[] {
   if (outOfChina(lng, lat)) {
     return [lng, lat]
   } else {
@@ -70,11 +70,11 @@ function wgs84togcj02(lng: number, lat: number) {
 
 /**
  * GCJ02 转换为 WGS84
- * @param lng
- * @param lat
- * @returns {*[]}
+ * @param lng 经度
+ * @param lat 纬度
+ * @returns {*[]} WGS84坐标
  */
-function gcj02towgs84(lng: number, lat: number) {
+function gcj02towgs84(lng: number, lat: number): any[] {
   if (outOfChina(lng, lat)) {
     return [lng, lat]
   } else {
@@ -110,11 +110,11 @@ function transformlng(lng: number, lat: number) {
 
 /**
  * 判断是否在国内，不在国内则不做偏移
- * @param lng
- * @param lat
- * @returns {boolean}
+ * @param lng 经度
+ * @param lat 纬度
+ * @returns {boolean} 是否在国内
  */
-function outOfChina(lng: number, lat: number) {
+function outOfChina(lng: number, lat: number): boolean {
   return lng < 72.004 || lng > 137.8347 || lat < 0.8293 || lat > 55.8271 || false
 }
 

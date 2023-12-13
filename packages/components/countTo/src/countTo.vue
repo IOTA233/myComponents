@@ -4,26 +4,41 @@ import { cancelAnimationFrame, requestAnimationFrame } from '@zhdgps/utils'
 
 // 定义组件 props
 const props = defineProps({
+  /**
+   * @description 起始值
+   */
   startVal: {
     type: Number,
     required: false,
     default: 0,
   },
+  /**
+   * @description 结束值
+   */
   endVal: {
     type: Number,
     required: false,
-    default: 2017,
+    default: 2023,
   },
+  /**
+   * @description 动画执行时间（单位：毫秒）
+   */
   duration: {
     type: Number,
     required: false,
     default: 3000,
   },
+  /**
+   * @description 是否自动播放动画
+   */
   autoplay: {
     type: Boolean,
     required: false,
     default: true,
   },
+  /**
+   * @description 保留的小数位
+   */
   decimals: {
     type: Number,
     required: false,
@@ -32,31 +47,49 @@ const props = defineProps({
       return value >= 0
     },
   },
+  /**
+   * @description 小数点符号
+   */
   decimal: {
     type: String,
     required: false,
     default: '.',
   },
+  /**
+   * @description 千位分隔符
+   */
   separator: {
     type: String,
     required: false,
     default: ',',
   },
+  /**
+   * @description 前缀
+   */
   prefix: {
     type: String,
     required: false,
     default: '',
   },
+  /**
+   * @description 后缀
+   */
   suffix: {
     type: String,
     required: false,
     default: '',
   },
+  /**
+   * @description 是否启用缓动动画
+   */
   useEasing: {
     type: Boolean,
     required: false,
     default: true,
   },
+  /**
+   * @description 自定义缓动动画的函数
+   */
   easingFn: {
     type: Function,
     /**
@@ -74,23 +107,23 @@ const props = defineProps({
 
 defineExpose({
   /**
-   * 开始动画
+   * @description 开始动画
    */
   start,
   /**
-   * 暂停/恢复动画
+   * @description 暂停/恢复动画
    */
   pauseResume,
   /**
-   * 暂停动画
+   * @description 暂停动画
    */
   pause,
   /**
-   * 恢复动画
+   * @description 恢复动画
    */
   resume,
   /**
-   * 重置动画
+   * @description 重置动画
    */
   reset,
 })
@@ -104,10 +137,7 @@ const startTime = ref(null)
 const remaining = ref(0)
 let rAF: any = null
 
-// 计算属性
 const countDown = computed(() => props.startVal > props.endVal)
-
-// 方法
 
 /**
  * 开始动画
@@ -197,14 +227,10 @@ function count(timestamp: any) {
   }
 }
 
-// 辅助方法
-
-// 判断是否为数字
 function isNumber(val: any) {
   return !Number.isNaN(Number.parseFloat(val))
 }
 
-// 格式化数字
 function formatNumber(num: any) {
   num = num.toFixed(props.decimals)
   num += ''
@@ -220,10 +246,8 @@ function formatNumber(num: any) {
   return props.prefix + x1 + x2 + props.suffix
 }
 
-// 生命周期钩子
-
-// 组件挂载时开始动画
 onMounted(() => {
+  // 组件挂载时开始动画
   if (props.autoplay) {
     start()
   }
@@ -234,7 +258,6 @@ onUnmounted(() => {
   cancelAnimationFrame(rAF)
 })
 
-// 监听 props 变化
 watch(() => props.startVal, () => {
   if (props.autoplay) {
     start()

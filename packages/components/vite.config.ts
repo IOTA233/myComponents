@@ -8,9 +8,15 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 
-const pathSrc = path.resolve(__dirname, '')
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "./styles/element/index.scss" as *;`,
+      },
+    },
+  },
   plugins: [
     vue(),
     AutoImport({
@@ -30,7 +36,7 @@ export default defineConfig({
         }),
       ],
 
-      dts: path.resolve(pathSrc, 'typings', 'auto-imports.d.ts'),
+      dts: path.resolve(__dirname, 'typings', 'auto-imports.d.ts'),
     }),
 
     Components({
@@ -45,7 +51,7 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
 
-      dts: path.resolve(pathSrc, 'typings', 'components.d.ts'),
+      dts: path.resolve(__dirname, 'typings', 'components.d.ts'),
     }),
 
     Icons({

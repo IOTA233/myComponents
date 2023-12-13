@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { exportJsonToExcel } from '@zhdgps/components'
+import { excel } from '@zhdgps/components/utils'
 import type { Column, ExportParams } from '@zhdgps/components'
 
 const tableData = [
@@ -94,7 +94,7 @@ async function handleClick() {
     data: tableData,
     filename: `excel` + `-${Date.UTC(2023, 12)}`,
   }
-  await exportJsonToExcel(param)
+  await excel.TransJsonToExcel(param)
 }
 </script>
 

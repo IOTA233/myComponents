@@ -3,6 +3,7 @@
 import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
 import { onMounted, ref } from 'vue'
 import { AddLocation } from '@element-plus/icons-vue'
+import { amapKey, tiandituKey } from '@zhdgps/constants'
 import pickCoordinate from './pickCoordinate.vue'
 
 defineOptions({
@@ -10,35 +11,66 @@ defineOptions({
 })
 
 defineProps({
+  /**
+   * @description 定位类型
+   */
   type: {
     type: String,
-    values: ['selsctor', 'picker', 'all'] as const,
+    values: ['selsctor', 'picker', 'default'] as const,
     default: 'selector',
   },
-  // 坐标，[经度, 纬度]
+  /**
+   * @description 高德开发者apikey
+   */
+  amapKey: {
+    type: String,
+    default: amapKey,
+  },
+  /**
+   * @description 天地图开发者apikey
+   */
+  tiandituKey: {
+    type: String,
+    default: tiandituKey,
+  },
+  /**
+   * @description 坐标，[经度, 纬度]
+   */
   coordinates: {
     type: Array<number>,
     default: () => [],
   },
+  /**
+   * @description 行政编码
+   */
   cityCode: {
     type: Array,
     default: () => [],
   },
+  /**
+   * @description 城市名称
+   */
   cityName: {
     type: String,
     default: '',
   },
+  /**
+   * @description 详细地址
+   */
   address: {
     type: String,
     default: '',
   },
   /**
-   * 是否支持选择海外地区
+   * @description 是否支持选择海外地区
    */
   abroad: {
     type: Boolean,
-    default: true,
+    default: false,
   },
+  /**
+   * @description 禁用
+   */
   disabled: {
     type: Boolean,
     default: false,
@@ -95,6 +127,10 @@ function onInputChange() {
   emits('update:cityName', areaName.value || '')
 }
 
+/**
+ * 根据点击地图的位置，返回地理信息
+ * @param cords 地理坐标信息
+ */
 function handlePick(cords: any) {
   const {
     address,
@@ -112,9 +148,13 @@ function handlePick(cords: any) {
 
 <template>
   <div>
-    <el-space v-if="type === 'all' || type === 'selector'">
+    <el-space v-if="type === 'default' || type === 'selector'">
       <template v-if="abroad">
-        <el-select v-model="country" style="min-width: 60px" :filterable="true" @change="handleChangeCountry">
+        <el-select
+          v-model="country"
+          :disabled="disabled"
+          style="min-width: 60px" :filterable="true" @change="handleChangeCountry"
+        >
           <el-option v-for="({ key, name }) in countries" :key="key" :value="key" :label="name">
             {{ name }}
           </el-option>
@@ -135,12 +175,13 @@ function handlePick(cords: any) {
       <el-input
         v-show="country !== 'china'"
         v-model="areaName"
+        :disabled="disabled"
         placeholder="请输入所属地区"
         @change="onInputChange"
       />
 
       <el-tooltip
-        v-if="type === 'all'"
+        v-if="type === 'default'"
         class="box-item"
         effect="dark"
         content="定位"
@@ -152,6 +193,6 @@ function handlePick(cords: any) {
     <div>
       <slot name="address" />
     </div>
-    <pickCoordinate v-if="type !== 'selector'" v-show="visible" style="margin-top: 6px" :coordinates="coordinates" @pickChange="handlePick" />
+    <pickCoordinate v-if="type !== 'selector'" v-show="visible" style="margin-top: 6px" :coordinates="coordinates" @pick-change="handlePick" />
   </div>
 </template>
