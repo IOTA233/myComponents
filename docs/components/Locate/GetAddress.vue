@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
 const location = ref()
 
 onMounted(async () => {
-  amap.GetIPLocation().then((data) => {
+  amap.GetReGeocode('116.473083,39.993252').then((data) => {
     location.value = data
   })
 })

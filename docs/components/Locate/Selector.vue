@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { Locate } from '@zhdgps/components'
 
 const cityCode = ref([])
 const address = ref('')

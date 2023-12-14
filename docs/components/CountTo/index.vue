@@ -1,10 +1,11 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import { CountTo } from '@zhdgps/components'
 
 const start = ref(9888.811)
 const end = ref(9888.811)
-const counter1 = ref(null)
-const counter2 = ref(null)
+const counter1 = ref()
+const counter2 = ref()
 const duration = 1000
 
 onMounted(() => {

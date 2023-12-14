@@ -6,7 +6,7 @@ import type { Column, ExcelOption, ExcelStyle, MergeRange } from '@zhdgps/consta
  * 导出JSON到excel文件
  * @param {object} params 导出excel配置
  */
-export function TransJsonToExcel(params: ExcelOption): Promise<void> {
+export function ExportJsonToExcel(params: ExcelOption): Promise<void> {
   let {
     columns,
     data,
@@ -53,10 +53,10 @@ export function TransJsonToExcel(params: ExcelOption): Promise<void> {
  * 导出table到excel
  * @param {ExcelOption} params 导出excel配置
  */
-export function TransTableToExcel({ table, filename, style }: ExcelOption): Promise<void> {
+export function ExportTableToExcel({ table, filename, style }: ExcelOption): Promise<void> {
   const [out, ranges] = generateArray(table)
 
-  return TransJsonToExcel({
+  return ExportJsonToExcel({
     columns: [],
     data: out,
     merges: ranges,

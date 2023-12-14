@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
 const location = ref()
 
 onMounted(async () => {
-  amap.GetIPLocation().then((data) => {
+  amap.GetGeocode('北京市朝阳区阜荣街10号').then((data) => {
     location.value = data
   })
 })

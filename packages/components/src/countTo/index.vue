@@ -133,7 +133,7 @@ const displayValue = ref(formatNumber(props.startVal))
 const printVal = ref(0)
 const paused = ref(false)
 const localDuration = ref(props.duration)
-const startTime = ref(null)
+const startTime = ref()
 const remaining = ref(0)
 let rAF: any = null
 

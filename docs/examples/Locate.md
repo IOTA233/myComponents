@@ -24,6 +24,20 @@ demo-preview=../components/Locate/Picker.vue
 demo-preview=../components/Locate/All.vue
 
 :::
+## 4、接口：地址描述信息 转换成 地理坐标（经纬度）
+
+:::preview title || component description content
+
+demo-preview=../components/Locate/GetCoordinate.vue
+
+:::
+## 5、接口：地理坐标（经纬度） 转换成 地址描述信息
+
+:::preview title || component description content
+
+demo-preview=../components/Locate/GetAddress.vue
+
+:::
 
 ## 配置参数（Attributes）
 

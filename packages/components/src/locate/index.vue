@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// import { ElButton } from 'element-plus';
 import pcaOptions from '@zhdgps/assets/json/province-city-area.json'
 import { onMounted, ref } from 'vue'
 import { AddLocation } from '@element-plus/icons-vue'
@@ -83,6 +82,7 @@ const code = ref<string[] | undefined>([])
 const areaName = ref('')
 const visible = ref(true)
 const cascader = ref()
+const picker = ref()
 
 const countries = [
   {
@@ -116,6 +116,9 @@ function onChange(value: any) {
   }
   emits('update:cityCode', value || [])
   emits('update:cityName', labels.join('/'))
+  if (picker.value) {
+    picker.value.startLocate(labels.join())
+  }
 }
 function onInputChange() {
   if (!areaName.value.length) {
@@ -193,6 +196,6 @@ function handlePick(cords: any) {
     <div>
       <slot name="address" />
     </div>
-    <pickCoordinate v-if="type !== 'selector'" v-show="visible" style="margin-top: 6px" :coordinates="coordinates" @pick-change="handlePick" />
+    <pickCoordinate v-if="type !== 'selector'" v-show="visible" ref="picker" style="margin-top: 6px" :district-code="code" :coordinates="coordinates" @pick-change="handlePick" />
   </div>
 </template>

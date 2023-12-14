@@ -3,6 +3,7 @@ import type { App, Component } from 'vue'
 import Locate from './src/locate'
 import Weather from './src/weather'
 import CountTo from './src/countTo'
+import Satellite from './src/satellite'
 
 import './styles/index.scss'
 
@@ -13,6 +14,7 @@ const components: {
   Locate,
   Weather,
   CountTo,
+  Satellite,
 }
 // 插件声明：声明所有插件
 // 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
@@ -29,8 +31,7 @@ const install: any = (app: any) => {
 }
 
 // 按需引入
-export { Locate, Weather, CountTo }
-export type { Column, ExcelOption, MergeRange }
+export { Locate, Weather, CountTo, Satellite }
 export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
   install,
