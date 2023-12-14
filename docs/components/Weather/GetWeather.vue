@@ -2,7 +2,7 @@
 import { amap } from '@zhdgps/components/utils'
 import { onMounted, ref } from 'vue'
 
-const weather = ref(null)
+const weather = ref()
 
 onMounted(async () => {
   amap.GetWeather('440100').then((data) => {

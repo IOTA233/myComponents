@@ -33,8 +33,14 @@ const props = defineProps({
     default: true,
   },
 })
-const emits = defineEmits(['pickChange'])
 
+const emits = defineEmits(['pickChange'])
+defineExpose({
+  /**
+   * @description 开始定位
+   */
+  startLocate,
+})
 const CENTER = [106.398962, 33.499772]
 const ZOOM = 5
 
@@ -55,6 +61,7 @@ const showCoordinate = computed(() =>
 watch(showCoordinate, () => {
   handleChange()
 })
+
 onMounted(() => {
   keyword.value = ''
   geoCode = {}
@@ -170,7 +177,11 @@ function handleSearch() {
     })
     return
   }
-  GetGeocode(keyword.value).then((res) => {
+  startLocate(keyword.value)
+}
+
+function startLocate(keyword) {
+  GetGeocode(keyword).then((res) => {
     const { status, geocodes } = res
     if (status === '1' && geocodes[0]) {
       geoCode = geocodes[0]
@@ -189,6 +200,7 @@ function handleSearch() {
     }
   })
 }
+
 async function handleChange() {
   if (showCoordinate.value === props.coordinates.join(', ')) {
     return

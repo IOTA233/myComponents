@@ -32,11 +32,11 @@ export interface ExcelOption {
   /**
    * @description 表头列表
    */
-  columns: (Column | string)[]
+  columns?: (Column | string)[]
   /**
    * @description 数据源
    */
-  data: any[]
+  data?: any[]
   /**
    * @description 文件名称
    */
@@ -54,15 +54,15 @@ export interface ExcelStyle {
   /**
    * @description 自动列宽
    */
-  autoWidth: boolean
+  autoWidth?: boolean
   /**
    * @description 填充表头
    */
-  fillHeader: boolean
+  fillHeader?: boolean
   /**
    * @description 表头行数（多级表头时，以此确定表头的分级行数）
    */
-  headerRowCount: number
+  headerRowCount?: number
   /**
    * @description 自定义样式
    */

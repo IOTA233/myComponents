@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { excel } from '@zhdgps/components/utils'
-import type { ExcelOption } from '@zhdgps/components'
+import type { ExcelOption, ExcelStyle } from '@zhdgps/components/types'
 
-const table = ref(null)
+const table = ref()
 
 const tableData = [
   {
@@ -45,9 +45,9 @@ async function handleClick() {
   const param: ExcelOption = {
     table: (table.value as any).$el,
     filename: `excel` + `-${Date.UTC(2023, 12)}`,
-    style: { headerRowCount: 3 },
+    style: { headerRowCount: 3 } as ExcelStyle,
   }
-  await excel.TransTableToExcel(param)
+  await excel.ExportTableToExcel(param)
 }
 </script>
 

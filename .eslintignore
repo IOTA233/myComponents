@@ -1,4 +1,14 @@
-node_modules
 
+*.sh
+node_modules
 *.md
-docs
+*.woff
+*.ttf
+.vscode
+.idea
+dist
+/public
+/docs
+.husky
+.local
+/bin

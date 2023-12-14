@@ -60,4 +60,27 @@ export default defineConfig({
 
     Inspect(),
   ],
+  build: {
+    // 打包后文件目录
+    outDir: 'lib',
+    // 压缩
+    minify: false,
+    rollupOptions: {
+      // 忽略打包vue文件
+      external: ['vue'],
+      // input: ["index.ts"],
+      output: {
+        globals: {
+          vue: 'Vue',
+        },
+        dir: 'dist',
+      },
+    },
+    lib: {
+      entry: './index.ts',
+      name: 'vue3-components',
+      fileName: 'vue3-components',
+      formats: ['es', 'umd', 'cjs'],
+    },
+  },
 })
