@@ -13,11 +13,11 @@ export interface DocOption {
   /**
    * 页边距 {top: 1440}，1440 i.e. 2.54 cm
    */
-  margins: object
+  margins?: object
   /*
    * 页面方向 portrait：竖向、landscape：横向
    */
-  orientation: string
+  orientation?: string
   /**
    * 导出文件名称
    */

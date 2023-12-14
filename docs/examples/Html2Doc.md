@@ -8,18 +8,41 @@ demo-preview=../components/Html2Doc/index.vue
 
 :::
 
+## 导出HTML为word文档
 
-## API
-## 方法: ExportHtmlToDocx
+```ts
+import { doc } from '@zhdgps/components/utils'
+import type { DocOption } from '@zhdgps/components/types'
 
-| 参数             | 描述                                             | 类型                            | 默认值  |
-| :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
-| size             | 尺寸                                             | 'large' / 'default' / 'small'   | - |
-| type             | 类型                                             |  'default / 'primary / 'success / 'warning / 'danger' | - |
-| plain            | 是否朴素按钮                                     | boolean | false     |
-| round            | 是否圆角按钮                                     | boolean | false     |
-| circle           | 是否圆形按钮                                     | boolean | false     | 无        |
-| time             | 防抖的时间                                       | number | 1000        |
-| tip             | 提示文字，常用于type="text" 或拥有text，link 属性的button       | string | -        |
-| placement         | Tooltip 组件出现的位置                           | 'top' / 'top-start' / 'top-end' / 'bottom' / 'bottom-start' / 'bottom-end' / 'left' / 'left-start' / 'left-end' / 'right' / 'right-start' / 'right-end' | top        |
-| tipProps         | Tooltip 组件的配置参数，详情可看 element-plus官网                | object | -        |
+doc.ExportHtmlToDocx({
+  element: '#node',
+  filename: 'locate',
+} as DocOption)
+```
+
+## 类型声明
+
+```ts
+interface DocOption {
+  /**
+   * 转换为doc的dom节点
+   */
+  element: string
+  /**
+   * 样式字符串
+   */
+  styleString?: string
+  /**
+   * 页边距 {top: 1440}，1440 i.e. 2.54 cm
+   */
+  margins?: object
+  /*
+   * 页面方向 portrait：竖向、landscape：横向
+   */
+  orientation?: string
+  /**
+   * 导出文件名称
+   */
+  filename: string
+}
+```

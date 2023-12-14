@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue'
 import { weatherImages } from '@zhdgps/constants'
 import { GetIPLocation, GetWeather } from '@zhdgps/utils/amap'
 import '../../styles/index.scss'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps({
   size: {
@@ -40,19 +41,18 @@ async function getIcon(weather: string) {
   return module.default
 }
 // 根据IP获取定位信息
-function fetchIPLocation() {
-  return GetIPLocation().then((data) => {
-    const { status, city, adcode } = data
-    if (status === '1') {
-      locationCity.value = {
-        city,
-        adcode,
-      }
+async function fetchIPLocation() {
+  const data = await GetIPLocation()
+  const { status, city, adcode } = data
+  if (status === '1') {
+    locationCity.value = {
+      city,
+      adcode,
     }
-  })
+  }
 }
 // 根据城市编码获取实况天气
-function fetchWeather() {
+async function fetchWeather() {
   forecasts.value = []
   const adcode = locationCity.value.adcode
   if (!adcode || typeof adcode !== 'string') {
@@ -62,24 +62,23 @@ function fetchWeather() {
     })
     return Promise.resolve()
   }
-  return GetWeather(adcode, 'all').then((data) => {
-    const { status, forecasts: forecastList = [] } = data || {}
-    if (status === '1') {
-      forecasts.value = forecastList[0].casts.slice(0, 3).map((item: any, index: number) => {
-        return {
-          ...item,
-          cnDay: getDate(index),
-        }
-      }) || []
-      console.log(forecasts.value)
-      weatherData.value = forecasts.value[0]
-      console.log(weatherData.value)
-
-      if (props.size === 'small' && forecasts.value.length > 0) {
-        startScrollWeather()
+  const data = await GetWeather(adcode, 'all')
+  const { status, forecasts: forecastList = [] } = data || {}
+  if (status === '1') {
+    forecasts.value = forecastList[0].casts.slice(0, 3).map((item: any, index: number) => {
+      return {
+        ...item,
+        cnDay: getDate(index),
       }
+    }) || []
+    console.log(forecasts.value)
+    weatherData.value = forecasts.value[0]
+    console.log(weatherData.value)
+
+    if (props.size === 'small' && forecasts.value.length > 0) {
+      startScrollWeather()
     }
-  })
+  }
 }
 
 function handleDateChange() {

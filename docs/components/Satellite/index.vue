@@ -10,6 +10,9 @@ function handleChange() {
 
 <template>
   <div>
-    <Satellite v-model="data" label="label" :collapse-tags="true" filterable :multiple="true" @change="handleChange" />
+    <Satellite
+      v-model="data" node-key="label"
+      :collapse-tags="true" filterable :multiple="true" @change="handleChange"
+    />
   </div>
 </template>

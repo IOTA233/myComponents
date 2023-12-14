@@ -170,6 +170,7 @@ function handlePick(cords: any) {
           :options="pcaOptions"
           :disabled="disabled"
           change-on-select
+          style="min-width: 220px"
           placeholder="请选择所属地区"
           @change="onChange"
         />

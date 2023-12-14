@@ -8,9 +8,8 @@ demo-preview=../components/Satellite/index.vue
 
 :::
 
-
 ## API
-## 方法: ExportHtmlToDocx
+## ExportHtmlToDocx
 
 | 参数             | 描述                                             | 类型                            | 默认值  |
 | :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
