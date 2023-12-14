@@ -30,7 +30,6 @@ const install: any = (app: any) => {
 
 // 按需引入
 export { Locate, Weather, CountTo }
-export type { Column, ExcelOption, MergeRange }
 export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
   install,
