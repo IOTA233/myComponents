@@ -14,15 +14,19 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: '目录',
+        text: '地理、气候',
         items: [
-          { text: '安装指南', link: '/examples/安装指南' },
           { text: 'Locate 定位', link: '/examples/Locate' },
           { text: 'Weather 天气', link: '/examples/Weather' },
+          { text: 'Satellite 卫星数据', link: '/examples/Satellite' },
+        ],
+      },
+      {
+        text: '文档、动画',
+        items: [
           { text: 'Html2Word 转换html', link: '/examples/Html2Doc' },
           { text: 'Data2Excel 导出excel', link: '/examples/Data2Excel' },
           { text: 'CountTo 数字动画', link: '/examples/CountTo' },
-          { text: 'Satellite 卫星数据', link: '/examples/Satellite' },
         ],
       },
     ],
