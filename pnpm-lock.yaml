@@ -17,12 +17,12 @@ importers:
       '@zhdgps/assets':
         specifier: workspace:^
         version: link:packages/assets
-      '@zhdgps/components':
-        specifier: workspace:^
-        version: link:packages/components
       '@zhdgps/constants':
         specifier: workspace:^
         version: link:packages/constants
+      '@zhdgps/vue3-components':
+        specifier: workspace:^
+        version: link:packages/components
       element-plus:
         specifier: ^2.4.3
         version: 2.4.3(vue@3.3.11)
@@ -129,7 +129,7 @@ importers:
       '@vitepress-demo-preview/plugin':
         specifier: ^1.2.2
         version: 1.2.2(markdown-it-container@3.0.0)(vitepress@1.0.0-rc.31)(vue@3.3.11)
-      '@zhdgps/components':
+      '@zhdgps/vue3-components':
         specifier: workspace:^
         version: link:../packages/components
       element-plus:

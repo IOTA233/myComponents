@@ -1,4 +1,4 @@
-# HTML转Word文档
+# Word文档操作
 
 ## 1、预览
 
@@ -8,11 +8,17 @@ demo-preview=../components/Html2Doc/index.vue
 
 :::
 
+::: tip 提示
+
+不支持CSS3的语法
+
+:::
+
 ## 导出HTML为word文档
 
 ```ts
-import { doc } from '@zhdgps/components/utils'
-import type { DocOption } from '@zhdgps/components/types'
+import { doc } from '@zhdgps/vue3-components/utils'
+import type { DocOption } from '@zhdgps/vue3-components/types'
 
 doc.ExportHtmlToDocx({
   element: '#node',
@@ -23,7 +29,10 @@ doc.ExportHtmlToDocx({
 ## 类型声明
 
 ```ts
-interface DocOption {
+/**
+ * 文档配置
+ */
+export interface DocOption {
   /**
    * 转换为doc的dom节点
    */
@@ -33,13 +42,17 @@ interface DocOption {
    */
   styleString?: string
   /**
+   * 是否使用styleString覆盖样式
+   */
+  coverStyle?: boolean
+  /**
    * 页边距 {top: 1440}，1440 i.e. 2.54 cm
    */
   margins?: object
   /*
    * 页面方向 portrait：竖向、landscape：横向
    */
-  orientation?: string
+  orientation?: 'landscape' | 'portrait'
   /**
    * 导出文件名称
    */

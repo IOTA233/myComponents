@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { excel } from '@zhdgps/components/utils'
-import type { ExcelOption, ExcelStyle } from '@zhdgps/components/types'
+import { excel } from '@zhdgps/vue3-components/utils'
+import type { ExcelOption, ExcelStyle } from '@zhdgps/vue3-components/types'
 
 const table = ref()
 

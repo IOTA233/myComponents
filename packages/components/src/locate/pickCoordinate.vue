@@ -37,7 +37,7 @@ const props = defineProps({
 const emits = defineEmits(['pickChange'])
 defineExpose({
   /**
-   * @description 开始定位
+   * 开始定位
    */
   startLocate,
 })

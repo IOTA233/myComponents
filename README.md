@@ -83,5 +83,5 @@ packages
 │  │  └─ weather                  # 气候组件
 │  ├─ constants                  # 常量配置
 │  └─ utils                  # 通用工具
-│     
+│
 ```

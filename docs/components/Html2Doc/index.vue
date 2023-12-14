@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { doc } from '@zhdgps/components/utils'
-import type { DocOption } from '@zhdgps/components/types'
+import { doc } from '@zhdgps/vue3-components/utils'
+import type { DocOption } from '@zhdgps/vue3-components/types'
 
 const activeName = ref('first')
 
@@ -82,9 +82,9 @@ async function handleClick() {
 
 <style scoped lang="scss">
 .preview-content {
-  h1{font-size:16pt;}
-  h2{font-size:15pt;}
-  p{font-size:10pt; }
+  h1 { font-size:16pt; }
+  h2 { font-size:15pt; }
+  p{ font-size:10pt; }
 
   table {
     width:100%;

@@ -11,7 +11,7 @@ defineOptions({
 
 defineProps({
   /**
-   * @description 定位类型
+   * 定位类型
    */
   type: {
     type: String,
@@ -19,56 +19,56 @@ defineProps({
     default: 'selector',
   },
   /**
-   * @description 高德开发者apikey
+   * 高德开发者apikey
    */
   amapKey: {
     type: String,
     default: amapKey,
   },
   /**
-   * @description 天地图开发者apikey
+   * 天地图开发者apikey
    */
   tiandituKey: {
     type: String,
     default: tiandituKey,
   },
   /**
-   * @description 坐标，[经度, 纬度]
+   * 坐标，[经度, 纬度]
    */
   coordinates: {
     type: Array<number>,
     default: () => [],
   },
   /**
-   * @description 行政编码
+   * 行政编码
    */
   cityCode: {
     type: Array,
     default: () => [],
   },
   /**
-   * @description 城市名称
+   * 城市名称
    */
   cityName: {
     type: String,
     default: '',
   },
   /**
-   * @description 详细地址
+   * 详细地址
    */
   address: {
     type: String,
     default: '',
   },
   /**
-   * @description 是否支持选择海外地区
+   * 是否支持选择海外地区
    */
   abroad: {
     type: Boolean,
     default: false,
   },
   /**
-   * @description 禁用
+   * 禁用
    */
   disabled: {
     type: Boolean,

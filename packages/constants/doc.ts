@@ -11,13 +11,17 @@ export interface DocOption {
    */
   styleString?: string
   /**
+   * 是否使用styleString覆盖样式
+   */
+  coverStyle?: boolean
+  /**
    * 页边距 {top: 1440}，1440 i.e. 2.54 cm
    */
   margins?: object
   /*
    * 页面方向 portrait：竖向、landscape：横向
    */
-  orientation?: string
+  orientation?: 'landscape' | 'portrait'
   /**
    * 导出文件名称
    */

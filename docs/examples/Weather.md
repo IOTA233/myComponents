@@ -16,11 +16,18 @@ demo-preview=../components/Weather/Small.vue
 
 :::
 
+## 参数
+
+| 参数 | 说明 | 类型 | 默认值 |
+|:-|:-|:-|:-|
+| amapKey | 自定义高德开发者apikey | string | '' |
+| size | 尺寸 | `'large'\| 'small'` | `'large'` |
+
 ## 方法
 ## 根据IP获取地理信息数据
 
 ```ts
-import { amap } from '@zhdgps/components/utils'
+import { amap } from '@zhdgps/vue3-components/utils'
 amap.GetIPLocation().then((data) => {
   console.log(data)
 })
@@ -29,16 +36,8 @@ amap.GetIPLocation().then((data) => {
 ## 根据地址编码获取天气
 
 ```ts
-import { amap } from '@zhdgps/components/utils'
+import { amap } from '@zhdgps/vue3-components/utils'
 amap.GetWeather('440100').then((data) => {
   console.log(data)
 })
 ```
-
-## GetWeather
-
-| 参数             | 说明                                             | 类型                            | 默认值  |
-| :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
-| adcode             | 行政编码                                             |string | - |
-| extensions             | 气象类型（实况/预报）                                             |  `'base'\| 'all'` | `'base'` |
-| key             | 自定义高德开发者apikey                                             |string | ‘’ |

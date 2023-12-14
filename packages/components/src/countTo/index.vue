@@ -5,7 +5,7 @@ import { cancelAnimationFrame, requestAnimationFrame } from '@zhdgps/utils'
 // 定义组件 props
 const props = defineProps({
   /**
-   * @description 起始值
+   * 起始值
    */
   startVal: {
     type: Number,
@@ -13,7 +13,7 @@ const props = defineProps({
     default: 0,
   },
   /**
-   * @description 结束值
+   * 结束值
    */
   endVal: {
     type: Number,
@@ -21,7 +21,7 @@ const props = defineProps({
     default: 2023,
   },
   /**
-   * @description 动画执行时间（单位：毫秒）
+   * 动画执行时间（单位：毫秒）
    */
   duration: {
     type: Number,
@@ -29,7 +29,7 @@ const props = defineProps({
     default: 3000,
   },
   /**
-   * @description 是否自动播放动画
+   * 是否自动播放动画
    */
   autoplay: {
     type: Boolean,
@@ -37,7 +37,7 @@ const props = defineProps({
     default: true,
   },
   /**
-   * @description 保留的小数位
+   * 保留的小数位
    */
   decimals: {
     type: Number,
@@ -48,7 +48,7 @@ const props = defineProps({
     },
   },
   /**
-   * @description 小数点符号
+   * 小数点符号
    */
   decimal: {
     type: String,
@@ -56,7 +56,7 @@ const props = defineProps({
     default: '.',
   },
   /**
-   * @description 千位分隔符
+   * 千位分隔符
    */
   separator: {
     type: String,
@@ -64,7 +64,7 @@ const props = defineProps({
     default: ',',
   },
   /**
-   * @description 前缀
+   * 前缀
    */
   prefix: {
     type: String,
@@ -72,7 +72,7 @@ const props = defineProps({
     default: '',
   },
   /**
-   * @description 后缀
+   * 后缀
    */
   suffix: {
     type: String,
@@ -80,7 +80,7 @@ const props = defineProps({
     default: '',
   },
   /**
-   * @description 是否启用缓动动画
+   * 是否启用缓动动画
    */
   useEasing: {
     type: Boolean,
@@ -88,7 +88,7 @@ const props = defineProps({
     default: true,
   },
   /**
-   * @description 自定义缓动动画的函数
+   * 自定义缓动动画的函数
    */
   easingFn: {
     type: Function,
@@ -107,23 +107,23 @@ const props = defineProps({
 
 defineExpose({
   /**
-   * @description 开始动画
+   * 开始动画
    */
   start,
   /**
-   * @description 暂停/恢复动画
+   * 暂停/恢复动画
    */
   pauseResume,
   /**
-   * @description 暂停动画
+   * 暂停动画
    */
   pause,
   /**
-   * @description 恢复动画
+   * 恢复动画
    */
   resume,
   /**
-   * @description 重置动画
+   * 重置动画
    */
   reset,
 })
@@ -221,7 +221,7 @@ function count(timestamp: any) {
   }
 
   displayValue.value = formatNumber(printVal.value)
-  // 检查是否继续执行动画或触发回调
+  // 检查是否继续执行动画
   if (progress < localDuration.value) {
     rAF = requestAnimationFrame(count)
   }
@@ -266,7 +266,7 @@ watch(() => props.startVal, () => {
 
 watch(() => props.endVal, () => {
   if (props.autoplay) {
-    start()
+    resume()
   }
 })
 </script>

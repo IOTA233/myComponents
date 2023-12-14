@@ -24,8 +24,8 @@ export function isEpProp(val: unknown): val is EpProp<any, any, any> {
 }
 
 /**
- * @description Build prop. It can better optimize prop types
- * @description 生成 prop，能更好地优化类型
+ * Build prop. It can better optimize prop types
+ * 生成 prop，能更好地优化类型
  * @example
   // limited options
   // the type will be PropType<'light' | 'dark'>

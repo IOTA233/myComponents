@@ -16,7 +16,7 @@ const IMAGE_QUALITY = 0.8
  * HTML导出Docx
  * @param {string} params 要导出的Html配置
  */
-export async function ExportHtmlToDocx({ element, styleString, margins, orientation = 'portrait', filename = 'htmlDocx' }: DocOption) {
+export async function ExportHtmlToDocx({ element, styleString = '', margins, orientation = 'portrait', filename = 'htmlDocx', coverStyle = false }: DocOption) {
   const html = generateContent(element)
 
   // 获取指定节点的ID
@@ -24,7 +24,11 @@ export async function ExportHtmlToDocx({ element, styleString, margins, orientat
   if (targetNode == null) {
     return Promise.resolve()
   }
-  const style = `${styleString} ${getClassAndStylesFromNode(targetNode)}`
+  // 如果使用自定义样式
+  // 1. coverStyle == false, 将自定义样式与原有样式合并
+  // 2. coverStyle == true, 使用自定义样式覆盖原有样式
+  let style = `${getClassAndStylesFromNode(targetNode)} ${styleString}`
+  style = coverStyle ? styleString : style
   const content = `
     <!DOCTYPE html>
     <html>
@@ -49,7 +53,7 @@ export async function ExportHtmlToDocx({ element, styleString, margins, orientat
  * @param {string} element 要导出的元素选择器
  * @returns {string}
  */
-function generateContent(element: any) {
+function generateContent(element: any): string {
   const sourceElement = document.querySelector(element)
   let cloneElement = sourceElement.cloneNode(true)
 

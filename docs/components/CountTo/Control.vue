@@ -1,42 +1,29 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { CountTo } from '@zhdgps/components'
+import { CountTo } from '@zhdgps/vue3-components'
 
-const start = ref(9888.811)
-const end = ref(9888.811)
-const counter1 = ref()
-const counter2 = ref()
-const duration = 1000
-
-onMounted(() => {
-  setInterval(() => {
-    start.value = start.value + 0.001
-    end.value = end.value + 0.001
-    counter1.value?.start()
-  }, duration)
-})
+const counter = ref()
 
 function handleStart() {
-  counter2.value.start()
+  counter.value.start()
 }
 function handlePause() {
-  counter2.value.pause()
+  counter.value.pause()
 }
 function handleResume() {
-  counter2.value.resume()
+  counter.value.resume()
 }
 function handlePauseResume() {
-  counter2.value.pauseResume()
+  counter.value.pauseResume()
 }
 function handleReset() {
-  counter2.value.reset()
+  counter.value.reset()
 }
 </script>
 
 <template>
   <el-space direction="vertical" alignment="flex-start" class="counter-number">
-    <CountTo ref="counter1" :start-val="start" :end-val="end" :decimals="3" :duration="duration" :autoplay="false" suffix=" m" />
-    <CountTo ref="counter2" :start-val="0" :end-val="1.01" :decimals="2" suffix=" m" :duration="10000" :use-easing="false" />
+    <CountTo ref="counter" :start-val="0" :end-val="1.01" :decimals="2" suffix=" m" :duration="5000" :use-easing="false" />
     <el-space>
       <el-button type="default" @click="handleStart">
         开始

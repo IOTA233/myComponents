@@ -24,7 +24,7 @@ demo-preview=../components/Locate/All.vue
 
 :::
 
-## 配置参数（Attributes）
+## 参数
 
 | 参数 | 说明 | 类型 | 默认值 |
 |:-|:-|:-|:-|
@@ -41,7 +41,7 @@ demo-preview=../components/Locate/All.vue
 ## 地址描述信息 转换成 地理坐标（经纬度）
 
 ```ts
-import { amap } from '@zhdgps/components/utils'
+import { amap } from '@zhdgps/vue3-components/utils'
 amap.GetGeocode('北京市朝阳区阜荣街10号').then((data) => {
   console.log(data)
 })
@@ -50,7 +50,7 @@ amap.GetGeocode('北京市朝阳区阜荣街10号').then((data) => {
 ## 地理坐标（经纬度） 转换成 地址描述信息
 
 ```ts
-import { amap } from '@zhdgps/components/utils'
+import { amap } from '@zhdgps/vue3-components/utils'
 amap.GetReGeocode('116.473083,39.993252').then((data) => {
   console.log(data)
 })

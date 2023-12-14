@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Weather } from '@zhdgps/components'
+import { Weather } from '@zhdgps/vue3-components'
 </script>
 
 <template>

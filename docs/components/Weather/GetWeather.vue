@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { amap } from '@zhdgps/components/utils'
+import { amap } from '@zhdgps/vue3-components/utils'
 import { onMounted, ref } from 'vue'
 
 const weather = ref()

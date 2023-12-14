@@ -1,15 +1,22 @@
-# 数字动画
+# 数字滚动动画
 
-## 1、预览
+## 1、实时更新
 
 :::preview title || component description content
 
-demo-preview=../components/CountTo/index.vue
+demo-preview=../components/CountTo/Keep.vue
 
 :::
 
-## API
-## 组件 属性说明
+## 2、控制动画
+
+:::preview title || component description content
+
+demo-preview=../components/CountTo/Control.vue
+
+:::
+
+## 参数
 
 | 参数 | 描述 | 类型 | 默认值 |
 |:-|:-|:-|:-|
@@ -25,7 +32,7 @@ demo-preview=../components/CountTo/index.vue
 | useEasing | 是否启用缓动动画 | boolean | true |
 | easingFn | 自定义缓动动画的函数 | Function | c * (-(2 ** (-10 * t / d)) + 1) * 1024 / 1023 + b |
 
-## 组件 外部方法
+## 外部方法
 
 | 名称 | 描述 | 类型 | 说明 |
 |:-|:-|:-|:-|
