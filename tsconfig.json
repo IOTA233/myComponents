@@ -13,6 +13,7 @@
     ],
     "skipLibCheck": true
   },
+  "esModuleInterop": true,
   "references": [{ "path": "./tsconfig.vite-config.json" }],
   "include": ["packages/*"]
 }

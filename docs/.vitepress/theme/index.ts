@@ -9,7 +9,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 基于element-plus二次封装基础组件
-import zhdComponents from '@zhdgps/vue3-components'
+import zhdComponents from '@zhdgps/vue3-tools'
 import { ElementPlusContainer } from '@vitepress-demo-preview/component'
 import '@vitepress-demo-preview/component/dist/style.css'
 

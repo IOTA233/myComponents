@@ -14,6 +14,12 @@ export default defineConfig({
 
     sidebar: [
       {
+        text: '',
+        items: [
+          { text: '安装指南', link: '/examples/安装指南' },
+        ],
+      },
+      {
         text: '地理、气候',
         items: [
           { text: 'Locate 定位', link: '/examples/Locate' },

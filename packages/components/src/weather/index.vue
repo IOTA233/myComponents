@@ -202,7 +202,7 @@ function getDate(index: number) {
     font-size: 12px;
     color: #7485a3;
 
-    ::v-deep .el-radio-group {
+    :deep(.el-radio-group) {
       font-size: unset;
     }
   }

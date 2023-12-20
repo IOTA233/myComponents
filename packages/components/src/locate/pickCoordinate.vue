@@ -65,6 +65,7 @@ watch(showCoordinate, () => {
 onMounted(() => {
   keyword.value = ''
   geoCode = {}
+  // 事件触发
   // 首次打开坐标拾取
   setTimeout(() => {
     setupMap()

@@ -1,5 +1,5 @@
 # 数字滚动动画
-
+基于`requestAnimationFrame`实现的数字滚动动画
 ## 1、实时更新
 
 :::preview title || component description content

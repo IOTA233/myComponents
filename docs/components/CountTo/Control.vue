@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { CountTo } from '@zhdgps/vue3-components'
+import { CountTo } from '@zhdgps/vue3-tools'
 
 const counter = ref()
 

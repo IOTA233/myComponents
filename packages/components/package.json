@@ -1,11 +1,17 @@
 {
-  "name": "@zhdgps/vue3-components",
+  "name": "@zhdgps/vue3-tools",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "build": "rimraf ../../lib && vite build",
     "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "element-plus": "^2.4.3",
+    "ol": "^8.2.0",
+    "vue": ">=3.0.0"
   },
   "dependencies": {
     "ol": "^8.2.0"

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { doc } from '@zhdgps/vue3-components/utils'
-import type { DocOption } from '@zhdgps/vue3-components/types'
+import { doc } from '@zhdgps/vue3-tools/utils'
+import type { DocOption } from '@zhdgps/vue3-tools/types'
 
 const activeName = ref('first')
 

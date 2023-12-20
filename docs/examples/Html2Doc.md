@@ -17,8 +17,8 @@ demo-preview=../components/Html2Doc/index.vue
 ## 导出HTML为word文档
 
 ```ts
-import { doc } from '@zhdgps/vue3-components/utils'
-import type { DocOption } from '@zhdgps/vue3-components/types'
+import { doc } from '@zhdgps/vue3-tools/utils'
+import type { DocOption } from '@zhdgps/vue3-tools/types'
 
 doc.ExportHtmlToDocx({
   element: '#node',

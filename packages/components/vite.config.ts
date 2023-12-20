@@ -7,6 +7,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
+import imagemin from 'vite-plugin-imagemin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -59,27 +60,35 @@ export default defineConfig({
     }),
 
     Inspect(),
+    imagemin({
+      optipng: {
+        optimizationLevel: 7,
+      },
+      pngquant: {
+        quality: [0.8, 0.9],
+        speed: 4,
+      },
+    }),
   ],
   build: {
     // 打包后文件目录
-    outDir: 'lib',
+    outDir: '../../lib',
     // 压缩
-    minify: false,
+    minify: true,
     rollupOptions: {
       // 忽略打包vue文件
-      external: ['vue'],
+      external: ['vue', 'ol', 'element-plus'],
       // input: ["index.ts"],
       output: {
         globals: {
           vue: 'Vue',
         },
-        dir: 'dist',
       },
     },
     lib: {
       entry: './index.ts',
-      name: 'vue3-components',
-      fileName: 'vue3-components',
+      name: 'vue3-tools',
+      fileName: 'vue3-tools',
       formats: ['es', 'umd', 'cjs'],
     },
   },

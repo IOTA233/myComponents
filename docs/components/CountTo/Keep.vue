@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { CountTo } from '@zhdgps/vue3-components'
+import { CountTo } from '@zhdgps/vue3-tools'
 
 const start = ref(9888.811)
 const end = ref(9888.811)

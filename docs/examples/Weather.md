@@ -28,7 +28,7 @@ demo-preview=../components/Weather/Small.vue
 ## 根据IP获取地理信息数据
 
 ```ts
-import { amap } from '@zhdgps/vue3-components/utils'
+import { amap } from '@zhdgps/vue3-tools/utils'
 amap.GetIPLocation().then((data) => {
   console.log(data)
 })
@@ -37,7 +37,7 @@ amap.GetIPLocation().then((data) => {
 ## 根据地址编码获取天气
 
 ```ts
-import { amap } from '@zhdgps/vue3-components/utils'
+import { amap } from '@zhdgps/vue3-tools/utils'
 amap.GetWeather('440100').then((data) => {
   console.log(data)
 })

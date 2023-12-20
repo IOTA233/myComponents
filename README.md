@@ -2,24 +2,24 @@
 
 ::: tip 提示
 
-@zhdgps/vue3-components 基于 vue3 + ts + Element-plus 二次封装的基础组件
+@zhdgps/vue3-tools 基于 vue3 + ts + Element-plus 二次封装的基础组件
 
 :::
 
 ## 安装
 
 ```bash:no-line-numbers
-npm install @zhdgps/vue3-components -S
-# pnpm add @zhdgps/vue3-components -S
-# yarn add @zhdgps/vue3-components -S
+npm install @zhdgps/vue3-tools -S
+# pnpm add @zhdgps/vue3-tools -S
+# yarn add @zhdgps/vue3-tools -S
 ```
 
 ## 使用
 
 ```js
 // main.ts
-import ZHDComponents from '@zhdgps/vue3-components'
-import '@zhdgps/vue3-components/lib/style.css'
+import ZHDComponents from '@zhdgps/vue3-tools'
+import '@zhdgps/vue3-tools/lib/style.css'
 const app = createApp(App)
 app.use(ZHDComponents)
 app.mount('#app')
@@ -31,7 +31,7 @@ app.mount('#app')
 // 需要在使用的项目的tsconfig.json文件中添加以下
 compilerOptions: {
   "types": [
-      "@zhdgps/vue3-components/components.d.ts",
+      "@zhdgps/vue3-tools/components.d.ts",
     ],
 }
 ``` -->

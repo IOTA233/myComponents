@@ -27,7 +27,7 @@ export function ExportJsonToExcel(params: ExcelOption): Promise<void> {
     worksheet.properties.defaultColWidth = 15
   }
 
-  if (typeof columns[0] !== 'object') {
+  if (columns != null && typeof columns[0] !== 'object') {
     columns = columns.map((item: any) => ({
       header: item,
       key: item,

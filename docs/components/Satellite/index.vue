@@ -1,5 +1,5 @@
 <script setup>
-import { Satellite } from '@zhdgps/vue3-components'
+import { Satellite } from '@zhdgps/vue3-tools'
 import { ref } from 'vue'
 
 const data = ref([])

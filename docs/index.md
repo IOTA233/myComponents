@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "前端组件CBB"
   text: ""
-  tagline: Vue3 中基于Element-plus二次封装基础组件文档
+  tagline: 基于vue3 + ts + Element-plus二次封装的基础组件
   actions:
     - theme: brand
       text: 安装指南
@@ -15,8 +15,8 @@ hero:
       link: /examples/Locate
 
 features:
-  - title: 基础组件
-    details: 基于Element-plus二次封装；使用组件 Demo 快速体验交互细节
-  - title: Vue驱动
-    details: 享受 Vue3 + vite3 的开发体验，在 Markdown 中使用 Vue 组件，同时可以使用 Vue 来开发自定义主题
+  - title: 地理信息、气候
+    details: 基于高德地图与openlayer，实现地图检索、定位；天气预报等功能
+  - title: 文档操作
+    details: 实现数据流到excel、word文档的转换
 ---

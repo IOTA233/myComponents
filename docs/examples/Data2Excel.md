@@ -17,16 +17,16 @@ demo-preview=../components/Data2Excel/TransTable.vue
 
 ## ExportJsonToExcel
 ```ts
-import { excel } from '@zhdgps/vue3-components/utils'
-import type { Column, ExcelOption } from '@zhdgps/vue3-components/types'
+import { excel } from '@zhdgps/vue3-tools/utils'
+import type { Column, ExcelOption } from '@zhdgps/vue3-tools/types'
 
 excel.ExportJsonToExcel(param)
 ```
 
 ## ExportTableToExcel
 ```ts
-import { excel } from '@zhdgps/vue3-components/utils'
-import type { Column, ExcelOption } from '@zhdgps/vue3-components/types'
+import { excel } from '@zhdgps/vue3-tools/utils'
+import type { Column, ExcelOption } from '@zhdgps/vue3-tools/types'
 
 excel.ExportJsonToExcel(param)
 ```
