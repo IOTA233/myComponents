@@ -72,7 +72,7 @@ export default defineConfig({
   ],
   build: {
     // 打包后文件目录
-    outDir: '../../lib',
+    outDir: 'lib',
     // 压缩
     minify: true,
     rollupOptions: {

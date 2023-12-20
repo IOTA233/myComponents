@@ -1,6 +1,6 @@
 {
   "name": "@zhdgps/constants",
+  "type": "module",
   "private": true,
-  "license": "MIT",
   "main": "index.ts"
 }

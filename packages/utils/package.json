@@ -2,9 +2,7 @@
   "name": "@zhdgps/utils",
   "version": "1.0.0",
   "private": true,
-  "license": "ISC",
   "main": "index.ts",
-  "scripts": {},
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
     "@types/html-docx-js": "^0.3.4",

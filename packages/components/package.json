@@ -1,12 +1,30 @@
 {
   "name": "@zhdgps/vue3-tools",
   "type": "module",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "exports": {
+    ".": {
+      "types": "./lib/src/index.d.ts",
+      "import": "./lib/openxui-button.mjs",
+      "require": "./lib/openxui-button.umd.js"
+    },
+    "./*": {
+      "import": "./lib/*",
+      "require": "./lib/*"
+    }
+  },
+  "files": [
+    "README.md",
+    "lib"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "rimraf ../../lib && vite build",
+    "build": "rimraf lib && vite build",
     "preview": "vite preview"
+  },
+  "publishConfig": {
+    "registry": "https://mynpm.com"
   },
   "peerDependencies": {
     "element-plus": "^2.4.3",
