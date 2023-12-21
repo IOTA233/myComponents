@@ -9,6 +9,8 @@ import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 import imagemin from 'vite-plugin-imagemin'
 
+import { visualizer } from 'rollup-plugin-visualizer'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   css: {
@@ -60,6 +62,14 @@ export default defineConfig({
     }),
 
     Inspect(),
+    visualizer({
+      gzipSize: true,
+      brotliSize: true,
+      emitFile: false,
+      filename: 'test.html', // 分析图生成的文件名
+      open: true, // 如果存在本地服务端口，将在打包后自动展示
+    }),
+
     imagemin({
       optipng: {
         optimizationLevel: 7,
@@ -74,14 +84,14 @@ export default defineConfig({
     // 打包后文件目录
     outDir: 'lib',
     // 压缩
-    minify: true,
+    minify: false,
     rollupOptions: {
       // 忽略打包vue文件
-      external: ['vue', 'ol', 'element-plus'],
+      external: ['axios', 'ol', 'element-plus', 'lodash-unified', /node_modules/],
       // input: ["index.ts"],
       output: {
         globals: {
-          vue: 'Vue',
+          ol: 'ol',
         },
       },
     },
@@ -89,7 +99,7 @@ export default defineConfig({
       entry: './index.ts',
       name: 'vue3-tools',
       fileName: 'vue3-tools',
-      formats: ['es', 'umd', 'cjs'],
+      formats: ['es', 'umd'],
     },
   },
 })

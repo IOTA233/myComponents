@@ -31,14 +31,13 @@ onMounted(async () => {
   fetchLoading.value = false
 })
 watch(weatherData, async () => {
-  dayIcon.value = await getIcon(weatherData.value.dayweather)
-  nightIcon.value = await getIcon(weatherData.value.nightweather)
+  dayIcon.value = getIcon(weatherData.value.dayweather)
+  nightIcon.value = getIcon(weatherData.value.nightweather)
 })
 
-async function getIcon(weather: string) {
+function getIcon(weather: string) {
   const code = weatherImages.get(weather) || '999'
-  const module = await import(`../../../assets/img/weather/${code}.png`)
-  return module.default
+  return new URL(`../../../assets/img/weather/${code}.png`, import.meta.url).href
 }
 // 根据IP获取定位信息
 async function fetchIPLocation() {

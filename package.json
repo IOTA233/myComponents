@@ -18,25 +18,22 @@
     "lint:fix": "eslint . --fix",
     "lint:style": "stylelint \"./**/*.{css,scss,vue,html}\" --fix",
     "prepare": "husky install",
-    "docs:dev": "pnpm run -C docs dev",
-    "docs:build": "pnpm run -C docs build",
-    "build:ui": "pnpm run -C packages/components build"
+    "dev:docs": "pnpm run -C docs dev",
+    "build:docs": "pnpm run -C docs build",
+    "build:tools": "pnpm run -C packages/components build",
+    "remove:modules": "rimraf node_modules && rimraf packages/*/node_modules"
+  },
+  "peerDependencies": {
   },
   "dependencies": {
     "@vue/shared": "^3.3.8",
     "@vueuse/core": "^10.6.1",
     "@zhdgps/assets": "workspace:^",
     "@zhdgps/constants": "workspace:^",
-    "@zhdgps/vue3-tools": "workspace:^",
-    "element-plus": "^2.4.3",
-    "lodash": "^4.17.21",
-    "lodash-es": "^4.17.21",
-    "lodash-unified": "^1.0.3",
-    "vue": "^3.3.4"
+    "@zhdgps/vue3-tools": "workspace:^"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.1.1",
-    "@element-plus/icons-vue": "^2.3.1",
     "@iconify-json/carbon": "^1.1.24",
     "@iconify-json/ep": "^1.1.13",
     "@tsconfig/node18": "^18.2.2",
@@ -44,12 +41,12 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/tsconfig": "^0.4.0",
     "@zhdgps/utils": "workspace:^",
-    "axios": "^1.6.2",
     "eslint": "^8.54.0",
     "husky": "^8.0.3",
     "postcss": "^8.4.32",
     "postcss-html": "^1.5.0",
     "postcss-scss": "^4.0.9",
+    "rollup-plugin-visualizer": "^5.11.0",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "typescript": "^5.2.2",
