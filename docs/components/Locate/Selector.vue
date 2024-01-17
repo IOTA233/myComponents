@@ -8,6 +8,10 @@ const address = ref('')
 
 <template>
   <div>
-    <Locate v-model:city-code="cityCode" v-model:address="address" type="selector" />
+    <Locate
+      v-model:city-code="cityCode"
+      v-model:address="address"
+      type="selector"
+    />
   </div>
 </template>

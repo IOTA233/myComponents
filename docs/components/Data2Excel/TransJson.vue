@@ -44,7 +44,7 @@ async function handleClick() {
       },
     ] as Column[],
     data: tableData,
-    filename: `excel` + `-${Date.UTC(2023, 12)}`,
+    filename: 'excel' + `-${Date.UTC(2023, 12)}`,
   }
   await excel.ExportJsonToExcel(param)
 }
@@ -53,17 +53,39 @@ async function handleClick() {
 <template>
   <el-tabs
     v-model="activeName"
-    editable class="demo-tabs vp-raw" type="card"
+    editable
+    class="demo-tabs vp-raw"
+    type="card"
     @edit="handleClick"
   >
     <template #addIcon>
       <el-icon><Download /></el-icon>
     </template>
-    <el-tab-pane label="JSON" name="first">
-      <el-table :data="tableData" style="width: 100%" height="250">
-        <el-table-column fixed prop="date" label="Date" width="150" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="address" label="Address" width="600" />
+    <el-tab-pane
+      label="JSON"
+      name="first"
+    >
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        height="250"
+      >
+        <el-table-column
+          fixed
+          prop="date"
+          label="Date"
+          width="150"
+        />
+        <el-table-column
+          prop="name"
+          label="Name"
+          width="120"
+        />
+        <el-table-column
+          prop="address"
+          label="Address"
+          width="600"
+        />
       </el-table>
     </el-tab-pane>
   </el-tabs>

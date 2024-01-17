@@ -156,9 +156,16 @@ function handlePick(cords: any) {
         <el-select
           v-model="country"
           :disabled="disabled"
-          style="min-width: 60px" :filterable="true" @change="handleChangeCountry"
+          style="min-width: 60px"
+          :filterable="true"
+          @change="handleChangeCountry"
         >
-          <el-option v-for="({ key, name }) in countries" :key="key" :value="key" :label="name">
+          <el-option
+            v-for="({ key, name }) in countries"
+            :key="key"
+            :value="key"
+            :label="name"
+          >
             {{ name }}
           </el-option>
         </el-select>
@@ -191,12 +198,24 @@ function handlePick(cords: any) {
         content="定位"
         placement="top-start"
       >
-        <el-button type="default" :icon="AddLocation" @click="visible = !visible" />
+        <el-button
+          type="default"
+          :icon="AddLocation"
+          @click="visible = !visible"
+        />
       </el-tooltip>
     </el-space>
     <div>
       <slot name="address" />
     </div>
-    <pickCoordinate v-if="type !== 'selector'" v-show="visible" ref="picker" style="margin-top: 6px" :district-code="code" :coordinates="coordinates" @pick-change="handlePick" />
+    <pickCoordinate
+      v-if="type !== 'selector'"
+      v-show="visible"
+      ref="picker"
+      style="margin-top: 6px"
+      :district-code="code"
+      :coordinates="coordinates"
+      @pick-change="handlePick"
+    />
   </div>
 </template>

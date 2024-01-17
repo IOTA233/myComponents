@@ -1,4 +1,4 @@
-<script setup>
+<script setup  lang="ts">
 import { ref } from 'vue'
 import { CountTo } from '@zhdgps/vue3-tools'
 
@@ -22,22 +22,49 @@ function handleReset() {
 </script>
 
 <template>
-  <el-space direction="vertical" alignment="flex-start" class="counter-number">
-    <CountTo ref="counter" :start-val="0" :end-val="1.01" :decimals="2" suffix=" m" :duration="5000" :use-easing="false" />
+  <el-space
+    direction="vertical"
+    alignment="flex-start"
+    class="counter-number"
+  >
+    <CountTo
+      ref="counter"
+      :start-val="0"
+      :end-val="1.01"
+      :decimals="2"
+      suffix=" m"
+      :duration="5000"
+      :use-easing="false"
+    />
     <el-space>
-      <el-button type="default" @click="handleStart">
+      <el-button
+        type="default"
+        @click="handleStart"
+      >
         开始
       </el-button>
-      <el-button type="default" @click="handlePause">
+      <el-button
+        type="default"
+        @click="handlePause"
+      >
         暂停
       </el-button>
-      <el-button type="default" @click="handleResume">
+      <el-button
+        type="default"
+        @click="handleResume"
+      >
         恢复
       </el-button>
-      <el-button type="default" @click="handlePauseResume">
+      <el-button
+        type="default"
+        @click="handlePauseResume"
+      >
         暂停/恢复
       </el-button>
-      <el-button type="default" @click="handleReset">
+      <el-button
+        type="default"
+        @click="handleReset"
+      >
         重置
       </el-button>
     </el-space>
@@ -47,12 +74,12 @@ function handleReset() {
 <style scoped>
 .counter-number {
   overflow: hidden;
-  font-size: 50px;
   font-family: LcdD, sans-serif;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #4b8088;
+  font-size: 50px;
   line-height: 58px;
+  color: #4b8088;
+  text-overflow: ellipsis;
   letter-spacing: 2px;
+  white-space: nowrap;
 }
 </style>

@@ -53,7 +53,7 @@ async function fetchIPLocation() {
 // 根据城市编码获取实况天气
 async function fetchWeather() {
   forecasts.value = []
-  const adcode = locationCity.value.adcode
+  const { adcode } = locationCity.value
   if (!adcode || typeof adcode !== 'string') {
     ElMessage({
       message: '获取天气失败',
@@ -64,12 +64,10 @@ async function fetchWeather() {
   const data = await GetWeather(adcode, 'all')
   const { status, forecasts: forecastList = [] } = data || {}
   if (status === '1') {
-    forecasts.value = forecastList[0].casts.slice(0, 3).map((item: any, index: number) => {
-      return {
-        ...item,
-        cnDay: getDate(index),
-      }
-    }) || []
+    forecasts.value = forecastList[0].casts.slice(0, 3).map((item: any, index: number) => ({
+      ...item,
+      cnDay: getDate(index),
+    })) || []
     console.log(forecasts.value)
     weatherData.value = forecasts.value[0]
     console.log(weatherData.value)
@@ -126,25 +124,46 @@ function getDate(index: number) {
     @mouseenter="stopScrollWeather"
     @mouseleave="startScrollWeather"
   >
-    <div class="header-right-weather-list" :class="{ 'header-right-weather-list--animate': weatherAnimate }">
-      <div v-for="{ dayweather, daytemp, week, cnDay } in forecasts" :key="week" class="header-right-weather-item">
+    <div
+      class="header-right-weather-list"
+      :class="{ 'header-right-weather-list--animate': weatherAnimate }"
+    >
+      <div
+        v-for="{ dayweather, daytemp, week, cnDay } in forecasts"
+        :key="week"
+        class="header-right-weather-item"
+      >
         <p class="header-right-weather__time">
-          <img class="header-right-weather__icon" :src="dayIcon" alt="weather">
+          <img
+            class="header-right-weather__icon"
+            :src="dayIcon"
+            alt="weather"
+          >
           <span>{{ cnDay }}</span>
         </p>
         <p class="header-right-weather-content">
-          <span v-if="daytemp != null" class="header-right-weather__temp">{{ daytemp }}℃</span>
+          <span
+            v-if="daytemp != null"
+            class="header-right-weather__temp"
+          >{{ daytemp }}℃</span>
           <span class="header-right-weather__name">{{ dayweather }}</span>
         </p>
       </div>
     </div>
   </div>
-  <div v-else class="weather home-card">
+  <div
+    v-else
+    class="weather home-card"
+  >
     <div class="home-card-header">
       <span class="home-card-header__name">天气情况</span>
       <span class="weather-updatetime">
         <template v-if="forecasts.length > 0">
-          <el-radio-group v-model="date" size="small" @change="handleDateChange">
+          <el-radio-group
+            v-model="date"
+            size="small"
+            @change="handleDateChange"
+          >
             <el-radio-button :label="0"> 今天 </el-radio-button>
             <el-radio-button :label="1"> 明天 </el-radio-button>
             <el-radio-button :label="2"> 后天 </el-radio-button>
@@ -154,9 +173,16 @@ function getDate(index: number) {
       </span>
     </div>
     <div class="home-card-body">
-      <div v-loading="fetchLoading" class="weather-body">
+      <div
+        v-loading="fetchLoading"
+        class="weather-body"
+      >
         <div class="weather-content">
-          <img class="weather-content__icon" :src="dayIcon" alt="">
+          <img
+            class="weather-content__icon"
+            :src="dayIcon"
+            alt=""
+          >
           <div class="weather-content-feature">
             <p>白天</p>
             <p>{{ weatherData.dayweather }}</p>
@@ -170,7 +196,11 @@ function getDate(index: number) {
           </p>
         </div>
         <div class="weather-content">
-          <img class="weather-content__icon" :src="nightIcon" alt="">
+          <img
+            class="weather-content__icon"
+            :src="nightIcon"
+            alt=""
+          >
           <div class="weather-content-feature">
             <p>夜晚</p>
             <p>{{ weatherData.nightweather }}</p>
@@ -218,8 +248,8 @@ function getDate(index: number) {
       bottom: 22px;
       left: 50%;
       width: 1px;
-      background: #eeeeee;
       content: '';
+      background: #eee;
     }
 
     // @media (max-width: 1600px) {
@@ -247,16 +277,16 @@ function getDate(index: number) {
 
     &-feature {
       display: inline-block;
-      vertical-align: middle;
       margin-left: 16px;
+      vertical-align: middle;
     }
 
     &__icon {
       display: inline-block;
-      vertical-align: middle;
-      margin-right: 24px;
       width: 56px;
       height: 56px;
+      margin-right: 24px;
+      vertical-align: middle;
     }
 
     &-feature,
@@ -297,16 +327,16 @@ function getDate(index: number) {
 
 .home-card {
   overflow: hidden;
+  background: #fff;
   border-radius: 8px;
-  background: #ffffff;
 
   $header-height: 40px;
 
   &-header {
-    padding: 0 16px;
     height: $header-height;
-    background: #f7faff;
+    padding: 0 16px;
     line-height: $header-height;
+    background: #f7faff;
 
     &__name {
       font-size: 18px;
@@ -321,8 +351,8 @@ function getDate(index: number) {
 }
 
 .header-right-weather {
-  overflow: hidden;
   height: 58px;
+  overflow: hidden;
   font-size: 18px;
   text-align: center;
 
@@ -345,8 +375,8 @@ function getDate(index: number) {
 
   &__icon {
     display: inline-block;
-    margin-right: 4px;
     height: 28px;
+    margin-right: 4px;
     vertical-align: middle;
   }
 

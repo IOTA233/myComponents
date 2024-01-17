@@ -9,7 +9,7 @@ const activeName = ref('first')
 async function handleClick() {
   await doc.ExportHtmlToDocx({
     element: '#node',
-    styleString: ``,
+    styleString: '',
     filename: 'locate',
   } as DocOption)
 }
@@ -18,13 +18,18 @@ async function handleClick() {
 <template>
   <el-tabs
     v-model="activeName"
-    editable class="demo-tabs vp-raw" type="card"
+    editable
+    class="demo-tabs vp-raw"
+    type="card"
     @edit="handleClick"
   >
     <template #addIcon>
       <el-icon><Download /></el-icon>
     </template>
-    <el-tab-pane label="HTML" name="first">
+    <el-tab-pane
+      label="HTML"
+      name="first"
+    >
       <div id="node">
         <div class="preview-content">
           <p class="main__title">
@@ -89,8 +94,8 @@ async function handleClick() {
   table {
     width:100%;
     text-align:center;
-    border-collapse:cllapse;
     border-spacing:0;
+    border-collapse:cllapse;
   }
 
   table td,table th {
@@ -98,23 +103,23 @@ async function handleClick() {
   }
   table th{white-space:nowrap;}
 
-  overflow: hidden;
-  margin: 0 auto;
-  padding: 25.4mm 31.7mm;
-  width: 228mm;
-  font-family: SimSun, sans-serif;
-  color: #000000;
-  background-color: #ffffff;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  width: 228mm;
+  padding: 25.4mm 31.7mm;
+  margin: 0 auto;
+  overflow: hidden;
+  font-family: SimSun, sans-serif;
+  color: #000;
+  background-color: #fff;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 8%);
   page-break-after: always;
 
   &-wrapper {
     height: calc(100% - 48px);
 
     .ant-spin-container {
-      overflow: auto;
       padding: 5mm 0;
+      overflow: auto;
     }
   }
 }
@@ -122,8 +127,8 @@ async function handleClick() {
 .main__title {
   font-size: 24pt;
   font-weight: 700;
-  text-align: center;
   line-height: 1.3;
+  text-align: center;
 }
 
 .main__subtitle {
@@ -132,24 +137,24 @@ async function handleClick() {
   }
 
   &-table {
-    border: 0;
     width: 100%;
     text-align: center;
     vertical-align: middle;
-    border-collapse: collapse;
     border-spacing: 0;
+    border-collapse: collapse;
+    border: 0;
   }
 
   &--left {
-    border:1px solid #ffffff;
-    border-bottom: 3px solid red;
-    font-size:16pt;text-align: left
+    font-size:16pt;text-align: left;
+    border:1px solid #fff;
+    border-bottom: 3px solid red
   }
 
   &--right {
-    border:1px solid #ffffff;
-    border-bottom: 3px solid red;
-    font-size:16pt;text-align: right
+    font-size:16pt;text-align: right;
+    border:1px solid #fff;
+    border-bottom: 3px solid red
   }
 }
 

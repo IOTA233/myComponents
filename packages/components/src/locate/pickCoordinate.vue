@@ -1,5 +1,7 @@
 <script  lang="ts" setup>
-import { computed, onBeforeMount, onMounted, ref, watch } from 'vue'
+import {
+  computed, onBeforeMount, onMounted, ref, watch,
+} from 'vue'
 import { Feature, Map, View } from 'ol'
 import MousePosition from 'ol/control/MousePosition'
 import { createStringXY } from 'ol/coordinate'
@@ -54,9 +56,7 @@ let mapInstance: Map
 const mapId = random(8).toString()
 const coordinateFormat = createStringXY(6)
 
-const showCoordinate = computed(() =>
-  pickCoordinate.value.length > 0 ? coordinateFormat(pickCoordinate.value).toString() : '',
-)
+const showCoordinate = computed(() => (pickCoordinate.value.length > 0 ? coordinateFormat(pickCoordinate.value).toString() : ''))
 
 watch(showCoordinate, () => {
   handleChange()
@@ -128,17 +128,15 @@ function addMarkerLayer(hasCoordinates: boolean) {
     source: new VectorSource({
       features: [markerFeature],
     }),
-    style: () => {
-      return new Style({
-        image: new Icon({
-          anchor: [0.5, 0.96],
-          scale: 0.5,
-          src: markerIcon,
-          size: [64, 64],
-          crossOrigin: 'Anonymous',
-        }),
-      })
-    },
+    style: () => new Style({
+      image: new Icon({
+        anchor: [0.5, 0.96],
+        scale: 0.5,
+        src: markerIcon,
+        size: [64, 64],
+        crossOrigin: 'Anonymous',
+      }),
+    }),
   })
 
   mapInstance.addLayer(markerLayer)
@@ -329,16 +327,29 @@ function destroyMap() {
           placeholder="请输入关键字进行搜索"
           @keyup.enter="handleSearch"
         />
-        <el-button type="primary" @click="handleSearch">
+        <el-button
+          type="primary"
+          @click="handleSearch"
+        >
           搜索
         </el-button>
       </el-space>
-      <div v-show="showCoordinate" class="picker-header-right picker-header__result">
+      <div
+        v-show="showCoordinate"
+        class="picker-header-right picker-header__result"
+      >
         坐标：{{ showCoordinate }}
       </div>
     </div>
-    <div :id="mapId" ref="map" class="map">
-      <div id="location" class="map-location" />
+    <div
+      :id="mapId"
+      ref="map"
+      class="map"
+    >
+      <div
+        id="location"
+        class="map-location"
+      />
     </div>
   </div>
 </template>
@@ -373,9 +384,9 @@ function destroyMap() {
     bottom: 40px;
     z-index: 666;
     font-size: 20px;
+    color: #fff;
+    text-shadow: 0 0 4px #000;
     white-space: nowrap;
-    color: #ffffff;
-    text-shadow: 0 0 4px #000000;
   }
 }
 </style>

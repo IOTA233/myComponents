@@ -1,0 +1,39 @@
+{
+  "name": "@zhdgps/build",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "vite build",
+    "test": "echo test"
+  },
+  "main": "./dist/zhdgps-build.umd.js",
+  "module": "./dist/zhdgps-build.mjs",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/zhdgps-build.umd.js",
+      "import": "./dist/zhdgps-build.mjs",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "vite": ">=3.0.0",
+    "vue": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@rollup/plugin-replace": "^5.0.2",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "rollup-plugin-visualizer": "^5.9.2",
+    "type-fest": "^4.1.0",
+    "typescript": "^5.1.6",
+    "vite-plugin-inspect": "^0.7.35"
+  }
+}

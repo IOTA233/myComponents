@@ -1,13 +1,30 @@
 {
   "name": "@zhdgps/utils",
   "version": "1.0.0",
-  "private": true,
-  "main": "index.ts",
-  "devDependencies": {
+  "scripts": {
+    "build": "vite build",
+    "test": "echo test"
+  },
+  "dependencies": {
     "@types/file-saver": "^2.0.7",
     "@types/html-docx-js": "^0.3.4",
+    "axios": "^1.6.2",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
-    "html-docx-js-typescript": "^0.1.5"
+    "html-docx-js-typescript": "^0.1.5",
+    "lodash-unified": "^1.0.3"
+  },
+  "devDependencies": {
+    "type-fest": "^4.1.0"
+  },
+  "main": "./dist/zhdgps-utils.umd.js",
+  "module": "./dist/zhdgps-utils.mjs",
+  "types": "./dist/src/index.d.ts", 
+  "exports": {
+    ".": {
+      "require": "./dist/zhdgps-utils.umd.js",
+      "import": "./dist/zhdgps-utils.mjs",
+      "types": "./dist/src/index.d.ts"
+    }
   }
 }

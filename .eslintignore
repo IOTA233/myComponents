@@ -1,14 +1,9 @@
-
-*.sh
+# .eslintignore
 node_modules
-*.md
-*.woff
-*.ttf
-.vscode
-.idea
 dist
-/public
-/docs
-.husky
-.local
-/bin
+
+!.eslintrc.js
+!.stylelintrc.js
+!.prettierrc.js
+!.lintstagedrc.js
+!.commitlintrc.js

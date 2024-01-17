@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed, defineProps, onMounted, onUnmounted, ref, watch } from 'vue'
+import {
+  computed, defineProps, onMounted, onUnmounted, ref, watch,
+} from 'vue'
 import { cancelAnimationFrame, requestAnimationFrame } from '@zhdgps/utils'
 
 // 定义组件 props
